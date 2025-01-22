@@ -26,7 +26,7 @@ main.c
 
 SHT45.c
 
-SSD1306.c
+ST7567S.c
 
 USART.c
 

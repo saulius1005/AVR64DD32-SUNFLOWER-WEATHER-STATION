@@ -49,7 +49,7 @@ C_SRCS +=  \
 ../Keypad3x4.c \
 ../main.c \
 ../SHT45.c \
-../SSD1306.c \
+../ST7567S.c \
 ../USART.c \
 ../Wind.c \
 ../Windows.c
@@ -74,7 +74,7 @@ i2c.o \
 Keypad3x4.o \
 main.o \
 SHT45.o \
-SSD1306.o \
+ST7567S.o \
 USART.o \
 Wind.o \
 Windows.o
@@ -92,7 +92,7 @@ i2c.o \
 Keypad3x4.o \
 main.o \
 SHT45.o \
-SSD1306.o \
+ST7567S.o \
 USART.o \
 Wind.o \
 Windows.o
@@ -110,7 +110,7 @@ i2c.d \
 Keypad3x4.d \
 main.d \
 SHT45.d \
-SSD1306.d \
+ST7567S.d \
 USART.d \
 Wind.d \
 Windows.d
@@ -128,7 +128,7 @@ i2c.d \
 Keypad3x4.d \
 main.d \
 SHT45.d \
-SSD1306.d \
+ST7567S.d \
 USART.d \
 Wind.d \
 Windows.d
@@ -231,7 +231,7 @@ LINKER_SCRIPT_DEP+=
 	@echo Finished building: $<
 	
 
-./SSD1306.o: .././SSD1306.c
+./ST7567S.o: .././ST7567S.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\AVR-Dx_DFP\2.6.303\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=avr64dd32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\AVR-Dx_DFP\2.6.303\gcc\dev\avr64dd32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

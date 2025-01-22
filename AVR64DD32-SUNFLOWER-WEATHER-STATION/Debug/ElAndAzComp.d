@@ -25,7 +25,7 @@ ElAndAzComp.d ElAndAzComp.o: .././ElAndAzComp.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././i2c.h .././SHT45.h .././BMP390.h .././Altitude.h .././ElAndAzComp.h \
- .././Communications.h .././SSD1306.h .././Keypad3x4.h .././Wind.h \
+ .././Communications.h .././St7567S.h .././Keypad3x4.h .././Wind.h \
  .././ElAndAzCompVar.h
 
 .././Settings.h:
@@ -92,7 +92,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 .././Communications.h:
 
-.././SSD1306.h:
+.././St7567S.h:
 
 .././Keypad3x4.h:
 

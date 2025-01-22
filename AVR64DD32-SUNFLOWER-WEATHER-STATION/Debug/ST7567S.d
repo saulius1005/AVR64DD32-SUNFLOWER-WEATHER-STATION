@@ -1,4 +1,4 @@
-SSD1306.d SSD1306.o: .././SSD1306.c .././Settings.h \
+ST7567S.d ST7567S.o: .././ST7567S.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -25,8 +25,8 @@ SSD1306.d SSD1306.o: .././SSD1306.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././i2c.h .././SHT45.h .././BMP390.h .././Altitude.h .././ElAndAzComp.h \
- .././Communications.h .././SSD1306.h .././Keypad3x4.h .././Wind.h \
- .././SSD1306Var.h .././font.h
+ .././Communications.h .././St7567S.h .././Keypad3x4.h .././Wind.h \
+ .././ST7567Var.h .././font.h
 
 .././Settings.h:
 
@@ -92,12 +92,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 .././Communications.h:
 
-.././SSD1306.h:
+.././St7567S.h:
 
 .././Keypad3x4.h:
 
 .././Wind.h:
 
-.././SSD1306Var.h:
+.././ST7567Var.h:
 
 .././font.h:

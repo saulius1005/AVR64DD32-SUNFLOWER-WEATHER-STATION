@@ -235,13 +235,13 @@
     <Compile Include="SHT45Var.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SSD1306.c">
+    <Compile Include="ST7567S.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SSD1306.h">
+    <Compile Include="St7567S.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SSD1306Var.h">
+    <Compile Include="ST7567Var.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="USART.c">

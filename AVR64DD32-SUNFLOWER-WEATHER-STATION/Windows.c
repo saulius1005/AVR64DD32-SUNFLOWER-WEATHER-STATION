@@ -557,7 +557,7 @@ void MainWindow()
 	screen_write_formatted_text("Light level:", 4, ALIGN_LEFT);//English
 	screen_write_formatted_text("%4dmV", 4, ALIGN_RIGHT, SUN.sunlevel);
 
-	screen_write_formatted_text("---------------------", 5, ALIGN_LEFT);
+	screen_write_formatted_text("---------------------", 5, ALIGN_CENTER);
 
 	if(Date_Clock.error == 1)
 		ClockError(6);
@@ -569,6 +569,18 @@ void MainWindow()
 	}
 }
 
+/*void TestWindow(){ //Screen testing window
+	screen_write_formatted_text("L.T.", 0, ALIGN_LEFT); //English
+	screen_write_formatted_text("R.T.", 0, ALIGN_RIGHT); //English
+	screen_write_formatted_text("---------------------", 2, ALIGN_CENTER); //English //21 -
+	screen_write_formatted_text("-----------", 3, ALIGN_LEFT); //English //11-
+	screen_write_formatted_text("-----------", 3, ALIGN_RIGHT); //English //11 -
+	screen_write_formatted_text("----------", 4, ALIGN_LEFT); //English //10-
+	screen_write_formatted_text("-----------", 4, ALIGN_RIGHT); //English //11 -
+	screen_write_formatted_text("L.B.", 7, ALIGN_LEFT); //English
+	screen_write_formatted_text("R.B.", 7, ALIGN_RIGHT); //English
+}*/
+
 /**
  * @brief Main function to handle window switching based on keypress
  * 
@@ -578,7 +590,9 @@ void windows() {
 	if(Keypad3x4.key_held == 21) //long press 1 menu- Date and time change window
 		DateAndLocationChangeWindow();
 	else if(Keypad3x4.key_held == 22) //long press 2 menu- all parameters view window
-		ParameterViewWindow();		
+		ParameterViewWindow();	
+	/*else if(Keypad3x4.key_held == 23) //long press 3 menu- screen testing 
+	TestWindow();	*/
 	else //if long press any other button in any window, go to mainWindow
 		MainWindow(); // All roads lead to MainWindow, not to Rome :D //Main window shows most important data: pressure, temperature, humidity, adjusted altitude and elevation, wind speed and direction, light level
 };

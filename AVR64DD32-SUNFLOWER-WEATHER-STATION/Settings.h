@@ -55,7 +55,7 @@
 #include "Altitude.h"
 #include "ElAndAzComp.h"
 #include "Communications.h"
-#include "St7567S.h"
+#include "SSD1306.h"
 #include "Keypad3x4.h"
 #include "Wind.h"
 

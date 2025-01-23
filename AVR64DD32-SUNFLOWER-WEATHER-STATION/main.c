@@ -21,7 +21,7 @@
 int main(void)
 {
     // Initialize system clock, GPIO, I2C, ADC, USART, and screen
-    CLOCK_XOSCHF_crystal_init();
+    CLOCK_XOSCHF_clock_init();
     GPIO_init();
     I2C_init();
     ADC0_init();
@@ -48,8 +48,12 @@ int main(void)
 
     screen_clear(); // Clear the screen
 
+	uint8_t updater = 0; //to control every action update intervals
+
     while (1) 
     {
+		ClockAndDataReader();//updating constantly data reading from SUN clock
+		if(updater == 1 || updater == 3){ // update p,Rh,t every 1,3 of 6
         // Read and process sensor data
         ReadBMP280TP(); // Read temperature and pressure from BMP280
         CalcTrueTemp(); // Calculate true temperature from BMP280
@@ -59,23 +63,28 @@ int main(void)
         // Read humidity and temperature from SHT21
         Separator(SHT21_Read(HOLD_MASTER_RH_MES)); // Read humidity from SHT21
         Separator(SHT21_Read(HOLD_MASTER_T_MES)); // Read temperature from SHT21
+		}
 
-        // Retransmit data from the clock device via USART1
-        Retransmitt();
-
-        // Read and process additional environmental parameters
-        WindSpeed(); // Calculate wind speed
-        WindDirection(); // Calculate wind direction
-        SunLevel(); // Calculate sun level
-        AltitudeAverage(); // Calculate altitude based on pressure
+		if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6
+			// Read and process additional environmental parameters
+			WindSpeed(); // Calculate wind speed
+			WindDirection(); // Calculate wind direction
+			SunLevel(); // Calculate sun level
+			AltitudeAverage(); // Calculate altitude based on pressure
+		}
 
         // Handle keypad input
-        keypad();
+        keypad(); //updating constantly
 
         // Display data on screen based on selected window
-        windows();
+		if(updater == 6){ //update every 2*0.15 = 0.3 second (update every ~150mS  (6.7times/s) maximum, without this if)
+			windows();
+			updater = 0; //Update screen info only every second 
+		}
+		updater++;
 
-        // Send data over USART (e.g., sun azimuth, wind speed, etc.)
+		//updating constantly
+        // Send data over USART (e.g., sun azimuth, wind speed, etc.). Data to towers
         USART_printf(0, "{%.2f|%.2f|%d|%d|%d}\r\n", 
                      SUN.adjazimuth, SUN.adjelevation, 
                      Wind.speed, Wind.direction, 

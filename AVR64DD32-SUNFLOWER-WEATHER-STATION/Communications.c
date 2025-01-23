@@ -174,24 +174,3 @@ uint8_t isValidLatitude(double latitude) {
 uint8_t isValidLongitude(double longitude) {
     return (longitude < -180.0 || longitude > 180.0) ? 1 : 0;
 }
-
-/**
- * @brief Reads clock data, processes solar angles, and retransmits formatted output.
- */
-void Retransmitt() {
-    ClockAndDataReader();
-    correct_solar_angles();
-    printf("%4d-%02d-%02d %02d:%02d:%02d: Az.: % 3.2f El.: % 3.2f T: %2.2fC P: %4.2fhPa RH: %2.2f%%\r\n",
-        Date_Clock.year,
-        Date_Clock.month,
-        Date_Clock.day,
-        Date_Clock.hour,
-        Date_Clock.minute,
-        Date_Clock.second,
-        SUN.azimuth,
-        SUN.adjelevation,
-        SHT21.T,
-        BMP280.Pressure,
-        SHT21.RH
-    );
-}

@@ -55,7 +55,7 @@
 #include "Altitude.h"
 #include "ElAndAzComp.h"
 #include "Communications.h"
-#include "St7567S.h"
+#include "SSD1306.h"
 #include "Keypad3x4.h"
 #include "Wind.h"
 
@@ -84,6 +84,8 @@ void CLOCK_XOSCHF_clock_init();
  * Configures the external crystal for system clock usage.
  */
 void CLOCK_XOSCHF_crystal_init();
+
+void CLOCK_INHF_clock_init();
 
 /**
  * @brief CRC decoder for CRC8 (Dallas/MAXIM).
@@ -615,14 +617,6 @@ void screen_write_text_aligned(char *text, uint8_t line, alignment_t alignment);
  * @param ... The variable arguments for the format string.
  */
 void screen_write_formatted_text(const char *format, uint8_t line, alignment_t alignment, ...);
-
-/**
- * @brief Retransmits data.
- * 
- * This function retransmits data that may have been lost or needs to be resent, possibly in the context
- * of communication protocols.
- */
-void Retransmitt();
 
 /**
  * @brief Handles window-related operations.

@@ -59,15 +59,6 @@
  * - `COMP`: Compensated altitude (meters).
  * - `AVRG`: Average altitude (meters).
  */
-typedef struct { 
-    int16_t UNCOMP; /**< Uncompensated altitude. */
-    int16_t COMP;   /**< Compensated altitude. */
-    int16_t AVRG;    /**< Average altitude. */
-} Alt;
 
-/**
- * @brief Global variable for storing altitude data.
- */
-extern Alt Altitude;
 
 #endif /* ALTITUDE_H_ */

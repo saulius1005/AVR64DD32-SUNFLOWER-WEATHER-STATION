@@ -4,8 +4,6 @@
 
 ADC.c
 
-Altitude.c
-
 BMP390.c
 
 CLK.c

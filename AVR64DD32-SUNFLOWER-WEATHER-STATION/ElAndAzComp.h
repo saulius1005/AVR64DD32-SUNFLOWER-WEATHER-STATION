@@ -11,6 +11,7 @@
 #ifndef ELANDAZCOMP_H_
 #define ELANDAZCOMP_H_
 
+#define R_EARTH 6371000.0
 /**
  * @brief Structure to hold solar angle data.
  *
@@ -26,6 +27,11 @@ typedef struct {
     uint16_t sunlevel;     ///< The measured sun level, typically obtained from an ADC (scaled value).
 } SunAngles;
 
+typedef struct { 
+    int16_t UNCOMP; /**< Uncompensated altitude. */
+} Alt;
+
 extern SunAngles SUN;  ///< External instance of the SunAngles structure to store solar data.
+extern Alt Altitude;
 
 #endif /* ELANDAZCOMP_H_ */

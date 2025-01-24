@@ -52,7 +52,6 @@
 #include "i2c.h"
 #include "SHT45.h"
 #include "BMP390.h"
-#include "Altitude.h"
 #include "ElAndAzComp.h"
 #include "Communications.h"
 #include "SSD1306.h"

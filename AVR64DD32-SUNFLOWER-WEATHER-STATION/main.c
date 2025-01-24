@@ -71,7 +71,6 @@ int main(void)
 			WindSpeed(); // Calculate wind speed
 			WindDirection(); // Calculate wind direction
 			SunLevel(); // Calculate sun level
-			AltitudeAverage(); // Calculate altitude based on pressure //
 		}
 
         // Handle keypad input

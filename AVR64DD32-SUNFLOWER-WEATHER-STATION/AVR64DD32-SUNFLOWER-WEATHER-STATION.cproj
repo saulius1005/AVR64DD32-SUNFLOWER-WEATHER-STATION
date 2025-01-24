@@ -154,15 +154,6 @@
     <Compile Include="ADC.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Altitude.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Altitude.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="AltitudeVar.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="BMP390.c">
       <SubType>compile</SubType>
     </Compile>

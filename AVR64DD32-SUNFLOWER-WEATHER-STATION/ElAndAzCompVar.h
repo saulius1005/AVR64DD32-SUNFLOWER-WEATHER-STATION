@@ -25,4 +25,8 @@ SunAngles SUN = {
     .sunlevel = 0        ///< The sun level, initialized to 0 (measured via ADC).
 };
 
+Alt Altitude = {
+ .UNCOMP = 86
+};
+
 #endif /* ELANDAZCOMPVAR_H_ */

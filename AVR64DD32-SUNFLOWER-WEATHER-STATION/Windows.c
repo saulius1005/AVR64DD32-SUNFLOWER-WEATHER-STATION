@@ -337,34 +337,34 @@ void parametersWOerror(uint8_t upDown) {
     }
     if (upDown < 4)
     {
-		//screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
-		screen_write_formatted_text("day top el.°:", 3-upDown, ALIGN_LEFT); // English
-		screen_write_formatted_text("%3.2f", 3-upDown, ALIGN_RIGHT, SUN.elevationTop);
+        //screen_write_formatted_text("kor. el.°:", 3-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("adj. el.°:", 3-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%3.2f", 3-upDown, ALIGN_RIGHT, SUN.adjelevation);
     }
+	if (upDown < 5)
+	{
+		//screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
+		screen_write_formatted_text("day top el.°:", 4-upDown, ALIGN_LEFT); // English
+		screen_write_formatted_text("%3.2f", 4-upDown, ALIGN_RIGHT, SUN.elevationTop);
+	}
     if (upDown > 4)
     {
-        //screen_write_formatted_text("kor. el.°:", 3-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("adj. el.°:", 12-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.4f", 12-upDown, ALIGN_RIGHT, SUN.adjelevation);
+        //screen_write_formatted_text("laik. z:", 12-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("t.z:", 12-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 12-upDown, ALIGN_RIGHT, Date_Clock.timezone);
     }
     if (upDown > 5)
     {
-        //screen_write_formatted_text("laik. z:", 12-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("t.z:", 13-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 13-upDown, ALIGN_RIGHT, Date_Clock.timezone);
+        //screen_write_formatted_text("plat. °:", 13-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("lat. °:", 13-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%2.4f", 13-upDown, ALIGN_RIGHT, Date_Clock.latitude);
     }
     if (upDown > 6)
     {
-        //screen_write_formatted_text("plat. °:", 13-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("lat. °:", 14-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%2.4f", 14-upDown, ALIGN_RIGHT, Date_Clock.latitude);
-    }
-	if (upDown > 7 && upDown <= 12)
-	{
         //screen_write_formatted_text("ilg. °:", 14-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("long. °:", 15-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.4f", 15-upDown, ALIGN_RIGHT, Date_Clock.longitude);
-	}
+        screen_write_formatted_text("long. °:", 14-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%3.4f", 14-upDown, ALIGN_RIGHT, Date_Clock.longitude);
+    }
 }
 
 /**
@@ -374,37 +374,31 @@ void parametersWOerror(uint8_t upDown) {
  * @param upDown The current step to determine which parameters to display.
  */
 void parametersWerror(uint8_t upDown){ 
-    if (upDown < 5)
-    {
-        screen_write_formatted_text("bmp T C°:", 4-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 4-upDown, ALIGN_RIGHT, BMP280.Temperature);
-    }
+
     if (upDown < 6)
     {
-        screen_write_formatted_text("sht T C°:", 5-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 5-upDown, ALIGN_RIGHT, SHT21.T);
+        screen_write_formatted_text("bmp T C°:", 5-upDown, ALIGN_LEFT);
+        screen_write_formatted_text("%3.2f", 5-upDown, ALIGN_RIGHT, BMP280.Temperature);
     }
     if (upDown < 7)
     {
-        screen_write_formatted_text("p hPa:", 6-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.4f", 6-upDown, ALIGN_RIGHT, BMP280.Pressure);
+        screen_write_formatted_text("sht T C°:", 6-upDown, ALIGN_LEFT);
+        screen_write_formatted_text("%3.2f", 6-upDown, ALIGN_RIGHT, SHT21.T);
     }
     if (upDown < 8)
     {
-        screen_write_formatted_text("rh %%:", 7-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 7-upDown, ALIGN_RIGHT, SHT21.RH);
+        screen_write_formatted_text("p hPa:", 7-upDown, ALIGN_LEFT);
+        screen_write_formatted_text("%3.2f", 7-upDown, ALIGN_RIGHT, BMP280.Pressure);
     }
     if (upDown > 0 && upDown <= 8)
     {
-        //screen_write_formatted_text("nk.aukðt. m:", 8-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("not adj.alt. m:", 8-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 8-upDown, ALIGN_RIGHT, Altitude.UNCOMP);
+        screen_write_formatted_text("rh %%:", 8-upDown, ALIGN_LEFT);
+        screen_write_formatted_text("%3.1f", 8-upDown, ALIGN_RIGHT, SHT21.RH);
     }
     if (upDown > 1 && upDown <= 9)
     {
-        //screen_write_formatted_text("k.aukðt. m:", 9-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("adj.alt. m:", 9-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 9-upDown, ALIGN_RIGHT, Altitude.COMP);
+        screen_write_formatted_text("alt. m:", 9-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 9-upDown, ALIGN_RIGHT, Altitude.UNCOMP);
     }
     if (upDown > 2 && upDown <= 10)
     {
@@ -418,11 +412,11 @@ void parametersWerror(uint8_t upDown){
         screen_write_formatted_text("w.d.no:", 11-upDown, ALIGN_LEFT); // English
         screen_write_formatted_text("%d", 11-upDown, ALIGN_RIGHT, Wind.direction);
     }
-    if (upDown > 8 && upDown <= 13)
+    if (upDown > 7 && upDown <= 12)
     {
         //screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("l.l. mV:", 16-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 16-upDown, ALIGN_RIGHT, SUN.sunlevel);
+        screen_write_formatted_text("l.l. mV:", 15-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 15-upDown, ALIGN_RIGHT, SUN.sunlevel);
     }
 }
 
@@ -502,17 +496,17 @@ void DateAndLocationChangeWindow()
 void ParameterViewWindow()
 {
 	static uint8_t upDown = 0;
-			if ((Keypad3x4.key == 8 && upDown < 9) || (Keypad3x4.key == 2 && upDown > 0)) {
+			if ((Keypad3x4.key == 8 && upDown < 8) || (Keypad3x4.key == 2 && upDown > 0)) {
 				while (scan_keypad() != 0); // Wait until the key is released
 				upDown += (Keypad3x4.key == 8) ? 1 : -1;
 				screen_clear();
 			}
 			if (Date_Clock.error == 1) {
 				int8_t place = 0;
-				if(upDown >= 5 && upDown < 7)
-					place = 6;
+				if(upDown >= 5 && upDown < 6)
+					place = 5;
 				else if(upDown >= 6 && upDown)
-					place = 13- upDown;
+					place = 12- upDown;
 				if(upDown != 4) //if updown is 4 all parameters showing, because at that part of window all parameters are not dependent on data from the clock device
 				ClockError(place);	//also scrolling error message if present
 			} 
@@ -532,19 +526,19 @@ void MainWindow()
 {
 	//screen_write_formatted_text("Temperatûra:", 0, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Temperature:", 0, ALIGN_LEFT); //English
-	screen_write_formatted_text("%2.02fC°", 0, ALIGN_RIGHT, SHT21.T);
+	screen_write_formatted_text("%dC°", 0, ALIGN_RIGHT, (int8_t)SHT21.T);
 
 	//screen_write_formatted_text("Slëgis:", 1, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Pressure:", 1, ALIGN_LEFT);//English
-	screen_write_formatted_text("%4.02fhPa", 1, ALIGN_RIGHT, BMP280.Pressure);
+	screen_write_formatted_text("%dhPa", 1, ALIGN_RIGHT, (uint16_t)BMP280.Pressure);
 
 	//screen_write_formatted_text("Drëgmë:", 2, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Humidity:", 2, ALIGN_LEFT);//English
-	screen_write_formatted_text("%3.02f%%", 2, ALIGN_RIGHT, SHT21.RH);
+	screen_write_formatted_text("%d%%", 2, ALIGN_RIGHT, (uint8_t)SHT21.RH);
 
 	//screen_write_formatted_text("Vëjas:    ", 3, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Wind:    ", 3, ALIGN_LEFT);//English
-	screen_write_formatted_text("%s", 3, ALIGN_CENTER, WindDirNames());
+	screen_write_formatted_text("        %s", 3, ALIGN_CENTER, WindDirNames());
 	screen_write_formatted_text("%2dm/s", 3, ALIGN_RIGHT, Wind.speed);
 
 	//screen_write_formatted_text("Apð.lygis:", 4, ALIGN_LEFT);//Lithuanian

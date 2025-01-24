@@ -24,7 +24,7 @@ CRC.d CRC.o: .././CRC.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\float.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- .././i2c.h .././SHT45.h .././BMP390.h .././Altitude.h .././ElAndAzComp.h \
+ .././i2c.h .././SHT45.h .././BMP390.h .././ElAndAzComp.h \
  .././Communications.h .././SSD1306.h .././Keypad3x4.h .././Wind.h
 
 .././Settings.h:
@@ -84,8 +84,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././SHT45.h:
 
 .././BMP390.h:
-
-.././Altitude.h:
 
 .././ElAndAzComp.h:
 

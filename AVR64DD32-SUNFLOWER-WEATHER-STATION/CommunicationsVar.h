@@ -24,7 +24,7 @@ Calendar Date_Clock = {
     .latitude = 0,       /**< Latitude of the location (in degrees) */
     .longitude = 0,      /**< Longitude of the location (in degrees) */
     .timezone = 2,               /**< Base timezone offset (adjust as needed for daylight savings or other time zones) */
-    .altitude = -50               /**< Altitude of the location (in meters) */
+    //.altitude = -50               /**< Altitude of the location (in meters) */
 };
 
 #endif /* COMMUNICATIONSVAR_H_ */

@@ -16,6 +16,7 @@
  * - `AVRG`: Set to 88 as a placeholder value.
  */
 Alt Altitude = {
+	.UNCOMP = 1288,
     .AVRG = 88, /**< Default average altitude value. */
 };
 

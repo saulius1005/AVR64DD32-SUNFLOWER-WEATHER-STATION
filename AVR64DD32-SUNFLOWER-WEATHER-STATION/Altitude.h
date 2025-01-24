@@ -60,9 +60,9 @@
  * - `AVRG`: Average altitude (meters).
  */
 typedef struct { 
-    double UNCOMP; /**< Uncompensated altitude. */
-    double COMP;   /**< Compensated altitude. */
-    float AVRG;    /**< Average altitude. */
+    int16_t UNCOMP; /**< Uncompensated altitude. */
+    int16_t COMP;   /**< Compensated altitude. */
+    int16_t AVRG;    /**< Average altitude. */
 } Alt;
 
 /**

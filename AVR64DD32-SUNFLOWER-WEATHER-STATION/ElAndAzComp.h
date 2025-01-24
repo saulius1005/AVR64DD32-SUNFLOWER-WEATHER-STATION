@@ -19,6 +19,7 @@
  */
 typedef struct {
     float elevation;       ///< The solar elevation angle in degrees.
+	float elevationTop;
     float azimuth;         ///< The solar azimuth angle in degrees.
     float adjelevation;    ///< The adjusted solar elevation considering refraction (in degrees).
     float adjazimuth;      ///< The adjusted solar azimuth (in degrees).

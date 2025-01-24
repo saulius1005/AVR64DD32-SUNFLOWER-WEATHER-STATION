@@ -34,7 +34,7 @@ typedef struct {
     double latitude;   /**< Latitude in decimal degrees (-90.0000 to 90.0000) */
     double longitude;  /**< Longitude in decimal degrees (-180.0000 to 180.0000) */
     int timezone;      /**< Timezone offset from UTC (-12 to +12) */
-    int16_t altitude;  /**< Altitude in meters (-500 to 9000) */
+   // int16_t altitude;  /**< Altitude in meters (-500 to 9000) */
     uint8_t error;     /**< Error flag (1 if an error occurs, 0 otherwise) */
     uint8_t errorCounter; /**< Counter for error occurrences */
     uint8_t warning;   /**< Warning flag (1 if a warning occurs) */

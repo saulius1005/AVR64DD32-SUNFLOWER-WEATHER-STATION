@@ -27,9 +27,9 @@ double calculate_refraction() {
         return 0.0;  // No refraction needed if the sun is below the horizon
 
     double elevation_rad = SUN.elevation * M_PI / 180.0;  // Convert elevation to radians
-    // Adjust pressure for altitude (Date_Clock.altitude is in meters)
-    if (Date_Clock.altitude > 0) 
-        BMP280.Pressure *= pow(1 - (0.0065 * Date_Clock.altitude / 288.15), 5.255); // Temperature lapse rate with altitude
+    // Adjust pressure for altitude (Altitude.UNCOMP is in meters)
+    if (Altitude.UNCOMP > 0) 
+        BMP280.Pressure *= pow(1 - (0.0065 * Altitude.UNCOMP / 288.15), 5.255); // Temperature lapse rate with altitude
 
     // Calculate refraction based on solar elevation and environmental factors
     double refraction = 0.0167 / tan(elevation_rad + (10.3 / (SUN.elevation + 5.11)));

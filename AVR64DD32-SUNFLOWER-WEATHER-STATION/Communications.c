@@ -49,6 +49,9 @@ void executeCommand(char *command) {
     if ((token = strtok(NULL, "|")) != NULL) {
         Date_Clock.timezone = atoi(token);
     }
+	if ((token = strtok(NULL, "|")) != NULL) {
+		SUN.elevationTop = atof(token);
+	}
 }
 
 /**

@@ -53,6 +53,7 @@ int main(void)
     while (1) 
     {
 		ClockAndDataReader();//updating constantly data reading from SUN clock
+		correct_solar_angles();
 		if(updater == 1 || updater == 3){ // update p,Rh,t every 1,3 of 6
         // Read and process sensor data
         ReadBMP280TP(); // Read temperature and pressure from BMP280
@@ -70,7 +71,7 @@ int main(void)
 			WindSpeed(); // Calculate wind speed
 			WindDirection(); // Calculate wind direction
 			SunLevel(); // Calculate sun level
-			AltitudeAverage(); // Calculate altitude based on pressure
+			AltitudeAverage(); // Calculate altitude based on pressure //
 		}
 
         // Handle keypad input
@@ -85,8 +86,9 @@ int main(void)
 
 		//updating constantly
         // Send data over USART (e.g., sun azimuth, wind speed, etc.). Data to towers
-        USART_printf(0, "{%.2f|%.2f|%d|%d|%d}\r\n", 
-                     SUN.adjazimuth, SUN.adjelevation, 
+
+        USART_printf(0, "{%.2f|%.2f|%.2f|%d|%d|%d}\r\n", 
+                     SUN.adjazimuth, SUN.adjelevation, SUN.elevationTop, 
                      Wind.speed, Wind.direction, 
                      SUN.sunlevel); // Send formatted data
 		PORTA.OUTTGL = PIN6_bm; //toggling TX LED (to make visible)

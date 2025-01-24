@@ -131,11 +131,11 @@ uint8_t extractDigitFromTimeZone(uint8_t step) {
  */
 uint8_t extractDigitFromAltitude(uint8_t step) {
     switch (step) {
-        case 0: return (Date_Clock.altitude < 0) ? 1 : 0;
-        case 1: return (abs(Date_Clock.altitude) / 1000) % 10;
-        case 2: return (abs(Date_Clock.altitude) / 100) % 10;
-        case 3: return (abs(Date_Clock.altitude) / 10) % 10;
-        case 4: return abs(Date_Clock.altitude) % 10;
+        case 0: return (Altitude.UNCOMP < 0) ? 1 : 0;
+        case 1: return (abs(Altitude.UNCOMP) / 1000) % 10;
+        case 2: return (abs(Altitude.UNCOMP) / 100) % 10;
+        case 3: return (abs(Altitude.UNCOMP) / 10) % 10;
+        case 4: return abs(Altitude.UNCOMP) % 10;
         default: return 0;
     }
 }
@@ -301,7 +301,7 @@ void ValidateNewData(uint8_t * newTimeAndPlace, uint8_t *step)
         newLatitude, // latitude
         newLongitude // longitude
         );
-        Date_Clock.altitude = newAltitude; // and save to this device altitude
+        Altitude.UNCOMP = newAltitude; // and save to this device altitude
         PORTD.OUTSET = PIN5_bm; // Time and location is set, continue normal clock work
     }
     _delay_ms(1000); // show any message for 1 second
@@ -329,36 +329,42 @@ void parametersWOerror(uint8_t upDown) {
     }
     if (upDown < 2){
         screen_write_formatted_text("az:°", 1-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.4f",1-upDown, ALIGN_RIGHT, SUN.azimuth);
+        screen_write_formatted_text("%3.2f",1-upDown, ALIGN_RIGHT, SUN.azimuth);
     }
     if(upDown < 3){
         screen_write_formatted_text("el.°:", 2-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.4f", 2-upDown, ALIGN_RIGHT, SUN.elevation);
+        screen_write_formatted_text("%3.2f", 2-upDown, ALIGN_RIGHT, SUN.elevation);
     }
     if (upDown < 4)
     {
-        //screen_write_formatted_text("kor. el.°:", 3-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("adj. el.°:", 3-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.4f", 3-upDown, ALIGN_RIGHT, SUN.adjelevation);
+		//screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
+		screen_write_formatted_text("day top el.°:", 3-upDown, ALIGN_LEFT); // English
+		screen_write_formatted_text("%3.2f", 3-upDown, ALIGN_RIGHT, SUN.elevationTop);
     }
     if (upDown > 4)
     {
-        //screen_write_formatted_text("laik. z:", 12-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("t.z:", 12-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 12-upDown, ALIGN_RIGHT, Date_Clock.timezone);
+        //screen_write_formatted_text("kor. el.°:", 3-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("adj. el.°:", 12-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%3.4f", 12-upDown, ALIGN_RIGHT, SUN.adjelevation);
     }
     if (upDown > 5)
     {
-        //screen_write_formatted_text("plat. °:", 13-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("lat. °:", 13-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%2.4f", 13-upDown, ALIGN_RIGHT, Date_Clock.latitude);
+        //screen_write_formatted_text("laik. z:", 12-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("t.z:", 13-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 13-upDown, ALIGN_RIGHT, Date_Clock.timezone);
     }
     if (upDown > 6)
     {
-        //screen_write_formatted_text("ilg. °:", 14-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("long. °:", 14-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.4f", 14-upDown, ALIGN_RIGHT, Date_Clock.longitude);
+        //screen_write_formatted_text("plat. °:", 13-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("lat. °:", 14-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%2.4f", 14-upDown, ALIGN_RIGHT, Date_Clock.latitude);
     }
+	if (upDown > 7 && upDown <= 12)
+	{
+        //screen_write_formatted_text("ilg. °:", 14-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("long. °:", 15-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%3.4f", 15-upDown, ALIGN_RIGHT, Date_Clock.longitude);
+	}
 }
 
 /**
@@ -392,43 +398,31 @@ void parametersWerror(uint8_t upDown){
     {
         //screen_write_formatted_text("nk.aukðt. m:", 8-upDown, ALIGN_LEFT); // Lithuanian
         screen_write_formatted_text("not adj.alt. m:", 8-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%4.1f", 8-upDown, ALIGN_RIGHT, Altitude.UNCOMP);
+        screen_write_formatted_text("%d", 8-upDown, ALIGN_RIGHT, Altitude.UNCOMP);
     }
     if (upDown > 1 && upDown <= 9)
     {
         //screen_write_formatted_text("k.aukðt. m:", 9-upDown, ALIGN_LEFT); // Lithuanian
         screen_write_formatted_text("adj.alt. m:", 9-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%4.1f", 9-upDown, ALIGN_RIGHT, Altitude.COMP);
+        screen_write_formatted_text("%d", 9-upDown, ALIGN_RIGHT, Altitude.COMP);
     }
     if (upDown > 2 && upDown <= 10)
     {
-        //screen_write_formatted_text("vid.aukðt. m:", 10-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("avg.alt. m:", 10-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%4.1f", 10-upDown, ALIGN_RIGHT, Altitude.AVRG);
+        //screen_write_formatted_text("v.g. m/s:", 15-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("w.s. m/s:", 10-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 10-upDown, ALIGN_RIGHT, Wind.speed);
     }
     if (upDown > 3 && upDown <= 11)
     {
-        //screen_write_formatted_text("real.aukðt. m:", 11-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("rl.alt. m:", 11-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 11-upDown, ALIGN_RIGHT, Date_Clock.altitude);
-    }
-    if (upDown > 7 && upDown <= 12)
-    {
-        //screen_write_formatted_text("v.g. m/s:", 15-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("w.s. m/s:", 15-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 15-upDown, ALIGN_RIGHT, Wind.speed);
+        //screen_write_formatted_text("v.k.nr:", 16-upDown, ALIGN_LEFT); // Lithuanian
+        screen_write_formatted_text("w.d.no:", 11-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 11-upDown, ALIGN_RIGHT, Wind.direction);
     }
     if (upDown > 8 && upDown <= 13)
     {
-        //screen_write_formatted_text("v.k.nr:", 16-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("w.d.no:", 16-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 16-upDown, ALIGN_RIGHT, Wind.direction);
-    }
-    if (upDown > 9 && upDown <= 14)
-    {
         //screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("l.l. mV:", 17-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 17-upDown, ALIGN_RIGHT, SUN.sunlevel);
+        screen_write_formatted_text("l.l. mV:", 16-upDown, ALIGN_LEFT); // English
+        screen_write_formatted_text("%d", 16-upDown, ALIGN_RIGHT, SUN.sunlevel);
     }
 }
 
@@ -508,17 +502,17 @@ void DateAndLocationChangeWindow()
 void ParameterViewWindow()
 {
 	static uint8_t upDown = 0;
-			if ((Keypad3x4.key == 8 && upDown < 10) || (Keypad3x4.key == 2 && upDown > 0)) {
+			if ((Keypad3x4.key == 8 && upDown < 9) || (Keypad3x4.key == 2 && upDown > 0)) {
 				while (scan_keypad() != 0); // Wait until the key is released
 				upDown += (Keypad3x4.key == 8) ? 1 : -1;
 				screen_clear();
 			}
 			if (Date_Clock.error == 1) {
 				int8_t place = 0;
-				if(upDown >= 5 && upDown < 8)
-					place = 7;
-				else if(upDown >= 8 && upDown)
-					place = 14- upDown;
+				if(upDown >= 5 && upDown < 7)
+					place = 6;
+				else if(upDown >= 6 && upDown)
+					place = 13- upDown;
 				if(upDown != 4) //if updown is 4 all parameters showing, because at that part of window all parameters are not dependent on data from the clock device
 				ClockError(place);	//also scrolling error message if present
 			} 

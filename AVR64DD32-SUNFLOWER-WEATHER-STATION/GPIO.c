@@ -58,7 +58,9 @@ void GPIO_init(){
     PORTC.PIN1CTRL &= ~PORT_ISC_gm; // Disable interrupt sense for PC1 (Wind speed sensor)
     PORTC.PIN1CTRL |= PORT_ISC_INPUT_DISABLE_gc; // Disable input sense for PC1
     PORTC.PIN1CTRL &= ~PORT_PULLUPEN_bm; // Disable pull-up for PC1
-    PORTA.PIN2CTRL &= ~PORT_ISC_gm; // Disable interrupt sense for PC2 (Sun light sensor)
-    PORTA.PIN2CTRL |= PORT_ISC_INPUT_DISABLE_gc; // Disable input sense for PC2
-    PORTA.PIN2CTRL &= ~PORT_PULLUPEN_bm; // Disable pull-up for PC2
+    PORTC.PIN2CTRL &= ~PORT_ISC_gm; // Disable interrupt sense for PC2 (Sun light sensor)
+    PORTC.PIN2CTRL |= PORT_ISC_INPUT_DISABLE_gc; // Disable input sense for PC2
+    PORTC.PIN2CTRL &= ~PORT_PULLUPEN_bm; // Disable pull-up for PC2
+
+	PORTC.DIRSET = PIN3_bm; //Set PC3 as Clock change command RX LED
 }

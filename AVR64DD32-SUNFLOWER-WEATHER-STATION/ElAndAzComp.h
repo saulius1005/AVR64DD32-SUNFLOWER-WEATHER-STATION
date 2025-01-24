@@ -12,26 +12,23 @@
 #define ELANDAZCOMP_H_
 
 #define R_EARTH 6371000.0
-/**
- * @brief Structure to hold solar angle data.
- *
- * This structure stores the solar elevation and azimuth angles, along with their adjusted
- * values considering the refraction effect, and the sun level measured from an ADC.
- */
+#define Default_AZ 171.4
+#define Default_EL 37.3
+
 typedef struct {
-    float elevation;       ///< The solar elevation angle in degrees.
+    float elevation;       
 	float elevationTop;
-    float azimuth;         ///< The solar azimuth angle in degrees.
-    float adjelevation;    ///< The adjusted solar elevation considering refraction (in degrees).
-    float adjazimuth;      ///< The adjusted solar azimuth (in degrees).
-    uint16_t sunlevel;     ///< The measured sun level, typically obtained from an ADC (scaled value).
+    float azimuth;        
+    float adjelevation;    
+    float adjazimuth;     
+    uint16_t sunlevel;    
 } SunAngles;
 
 typedef struct { 
-    int16_t UNCOMP; /**< Uncompensated altitude. */
+    int16_t UNCOMP;
 } Alt;
 
-extern SunAngles SUN;  ///< External instance of the SunAngles structure to store solar data.
+extern SunAngles SUN;  
 extern Alt Altitude;
 
 #endif /* ELANDAZCOMP_H_ */

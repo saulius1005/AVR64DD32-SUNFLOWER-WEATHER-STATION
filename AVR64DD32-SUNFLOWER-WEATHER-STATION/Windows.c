@@ -285,7 +285,7 @@ void ValidateNewData(uint8_t * newTimeAndPlace, uint8_t *step)
         screen_write_formatted_text("Wrong longitude!", 3, ALIGN_CENTER); // English
         *step = 30; // put marker on longitude
     }
-    else{                                        
+    else{                       
         *step = 0;
         lastAction = 0; // all good, go to main window
         //screen_write_formatted_text("Iðsaugota :D", 3, ALIGN_CENTER); // Lithuanian // display success message
@@ -303,6 +303,8 @@ void ValidateNewData(uint8_t * newTimeAndPlace, uint8_t *step)
         );
         Altitude.UNCOMP = newAltitude; // and save to this device altitude
         PORTD.OUTSET = PIN5_bm; // Time and location is set, continue normal clock work
+		SUN.adjazimuth = Default_AZ;
+		SUN.adjelevation = Default_EL; //refreshing elevation and azimuth to 0 if new time is night
     }
     _delay_ms(1000); // show any message for 1 second
     Keypad3x4.key_held = lastAction; // going to main window if success, and stay if data is wrong
@@ -475,9 +477,11 @@ void DateAndLocationChangeWindow()
 			else if (Keypad3x4.key == 12) { //if pressed # key
 				step = DataExtraction(step, newTimeAndPlace);			
 				if (step == 38) { //All digits are set. Now checking boundaries of all variables (date/time, time zone, altitude, latitude, and longitude)
+					PORTC.OUTSET = PIN3_bm; //turn on clock changing RX LED
 					screen_clear(); //clear screen
 					ValidateNewData(newTimeAndPlace, &step); //Validate date and show error or success message
 					screen_clear(); //clear screen
+					PORTC.OUTCLR = PIN3_bm; //turn off clock changing RX LED
 				}
 			}
 		}

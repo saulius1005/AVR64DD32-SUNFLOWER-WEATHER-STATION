@@ -47,9 +47,7 @@ int main(void)
     ReadBMP280Calibration(); // Read BMP280 calibration values
 
     screen_clear(); // Clear the screen
-
 	uint8_t updater = 0; //to control every action update intervals
-
     while (1) 
     {
 		ClockAndDataReader();//updating constantly data reading from SUN clock

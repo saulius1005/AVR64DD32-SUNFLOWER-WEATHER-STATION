@@ -181,7 +181,7 @@ typedef struct {
 typedef struct {
     uint8_t ID; /**< Sensor ID */
     float Temperature; /**< Temperature reading in Celsius */
-    double Pressure; /**< Pressure reading in hPa */
+    float Pressure; /**< Pressure reading in hPa */
     BMP280Values CalibrationValues; /**< Calibration coefficients */
     BMP280Config Config; /**< Configuration settings */
     BMP280Status Status; /**< Sensor status */

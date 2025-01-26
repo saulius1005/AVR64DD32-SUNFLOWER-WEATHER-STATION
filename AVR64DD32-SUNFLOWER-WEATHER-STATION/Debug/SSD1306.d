@@ -26,7 +26,7 @@ SSD1306.d SSD1306.o: .././SSD1306.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././i2c.h .././SHT45.h .././BMP390.h .././ElAndAzComp.h \
  .././Communications.h .././SSD1306.h .././Keypad3x4.h .././Wind.h \
- .././SSD1306Var.h .././font.h
+ .././windows.h .././SSD1306Var.h .././font.h
 
 .././Settings.h:
 
@@ -95,6 +95,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././Keypad3x4.h:
 
 .././Wind.h:
+
+.././windows.h:
 
 .././SSD1306Var.h:
 

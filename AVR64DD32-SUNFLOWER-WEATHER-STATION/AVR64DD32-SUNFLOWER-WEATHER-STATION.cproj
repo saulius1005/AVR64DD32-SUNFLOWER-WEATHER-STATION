@@ -247,6 +247,12 @@
     <Compile Include="Windows.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="windows.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="windowsVar.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="WindVar.h">
       <SubType>compile</SubType>
     </Compile>

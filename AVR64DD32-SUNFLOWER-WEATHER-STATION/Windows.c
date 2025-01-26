@@ -9,6 +9,7 @@
  */
 
 #include "Settings.h"
+#include "windowsVar.h"
 
 /**
  * @brief Displays the current date, time, timezone, altitude, latitude, and longitude on the screen.
@@ -505,18 +506,29 @@ void ParameterViewWindow()
 				upDown += (Keypad3x4.key == 8) ? 1 : -1;
 				screen_clear();
 			}
-			if (Date_Clock.error == 1) {
-				int8_t place = 0;
-				if(upDown >= 5 && upDown < 6)
-					place = 5;
-				else if(upDown >= 6 && upDown)
-					place = 12- upDown;
-				if(upDown != 4) //if updown is 4 all parameters showing, because at that part of window all parameters are not dependent on data from the clock device
-				ClockError(place);	//also scrolling error message if present
-			} 
-			else 
-				parametersWOerror(upDown); //showing those parameters only if the clock device is working normally without errors
-		parametersWerror(upDown); //showing these parameters all the time if error is present
+			if(
+			(upDown == 0 && Refresh.tempHsec != Date_Clock.hunderts) ||
+			((upDown < 3 || upDown > 0)  && (Refresh.tempC != (int16_t)SHT21.T * 100 ||
+			/*Refresh.tempRh != (uint16_t)SHT21.RH*100 ||*/
+			Refresh.tempp != (uint16_t)BMP280.Pressure*100 ||
+			/*Refresh.tempC2 != (int16_t)BMP280.Temperature*100 ||*/
+			Refresh.tempAz != (uint16_t)SUN.azimuth*100 ||
+			Refresh.tempEl != (uint16_t)SUN.elevation*100))
+			
+			){
+				if (Date_Clock.error == 1) {
+					int8_t place = 0;
+					if(upDown >= 5 && upDown < 6)
+						place = 5;
+					else if(upDown >= 6 && upDown)
+						place = 12- upDown;
+					if(upDown != 4) //if updown is 4 all parameters showing, because at that part of window all parameters are not dependent on data from the clock device
+					ClockError(place);	//also scrolling error message if present
+				} 
+				else 
+					parametersWOerror(upDown); //showing those parameters only if the clock device is working normally without errors
+			parametersWerror(upDown); //showing these parameters all the time if error is present
+		}
 		backButton(); // Going back to the main window
 }
 
@@ -578,13 +590,43 @@ void MainWindow()
  * 
  * This function checks the key press and switches between different windows such as main window, date and location change window, or parameters view window.
  */
-void windows() {
-	if(Keypad3x4.key_held == 21) //long press 1 menu- Date and time change window
+
+void smartScreenUpdater(){
+
+	if(Keypad3x4.key_held == 21){ //date and location 
+		if(Keypad3x4.key != Refresh.tempKey) // updating only if any key is pressed
 		DateAndLocationChangeWindow();
-	else if(Keypad3x4.key_held == 22) //long press 2 menu- all parameters view window
-		ParameterViewWindow();	
-	/*else if(Keypad3x4.key_held == 23) //long press 3 menu- screen testing 
-	TestWindow();	*/
-	else //if long press any other button in any window, go to mainWindow
-		MainWindow(); // All roads lead to MainWindow, not to Rome :D //Main window shows most important data: pressure, temperature, humidity, adjusted altitude and elevation, wind speed and direction, light level
+	}
+	else if(Keypad3x4.key_held == 22){ // parameters view window
+			 ParameterViewWindow();
+	}
+	else{ //main menu
+		if(Refresh.tempC != (int16_t)SHT21.T * 100 || 
+		Refresh.tempRh != (uint16_t)SHT21.RH*100 || 
+		Refresh.tempp != (uint16_t)BMP280.Pressure*100 || 
+		Refresh.tempWD != Wind.direction || 
+		Refresh.tempWS != Wind.speed || 
+		Refresh.tempSLS != SUN.sunlevel || 
+		Refresh.tempAz != (uint16_t)SUN.azimuth*100 ||
+		Refresh.tempEl != (uint16_t)SUN.elevation*100 ||
+		Refresh.tempSec != Date_Clock.second)
+			MainWindow();
+	}
+}
+
+
+void windows() {
+	smartScreenUpdater();
+	Refresh.tempC = (int16_t)SHT21.T * 100;
+	Refresh.tempRh = (uint16_t)SHT21.RH*100; 
+	Refresh.tempp = (uint16_t)BMP280.Pressure*100;
+	Refresh.tempC2 = (int16_t)BMP280.Temperature * 100;
+	Refresh.tempWD = Wind.direction;
+	Refresh.tempWS = Wind.speed;
+	Refresh.tempSLS = SUN.sunlevel;
+	Refresh.tempAz = (uint16_t)SUN.azimuth*100;
+	Refresh.tempEl = (uint16_t)SUN.elevation*100;
+	Refresh.tempSec = Date_Clock.second;
+	Refresh.tempHsec = Date_Clock.hunderts;
+	Refresh.tempKey = Keypad3x4.key;
 };

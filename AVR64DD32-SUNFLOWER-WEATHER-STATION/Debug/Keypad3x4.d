@@ -26,7 +26,7 @@ Keypad3x4.d Keypad3x4.o: .././Keypad3x4.c .././Settings.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././i2c.h .././SHT45.h .././BMP390.h .././ElAndAzComp.h \
  .././Communications.h .././SSD1306.h .././Keypad3x4.h .././Wind.h \
- .././Keypad3x4Var.h
+ .././windows.h .././Keypad3x4Var.h
 
 .././Settings.h:
 
@@ -95,5 +95,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././Keypad3x4.h:
 
 .././Wind.h:
+
+.././windows.h:
 
 .././Keypad3x4Var.h:

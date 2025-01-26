@@ -21,7 +21,7 @@
  */
 void I2C_init(void) {
     // Configure SDA hold, SDA setup, and enable fast mode plus (FMP)
-    TWI0.CTRLA = TWI_SDAHOLD_OFF_gc | TWI_SDASETUP_4CYC_gc | TWI_FMPEN_ON_gc;
+    TWI0.CTRLA = TWI_SDAHOLD_50NS_gc | TWI_SDASETUP_8CYC_gc | TWI_FMPEN_ON_gc;
 
     // Set baud rate for the I2C bus
     TWI0.MBAUD = (uint8_t)TWI_BAUD;
@@ -210,47 +210,4 @@ uint64_t ReadMulti(uint8_t addr, uint8_t reg, uint8_t bytes) {
 
     TWI0.MCTRLB |= TWI_MCMD_STOP_gc; // Send STOP signal
     return data;
-}
-
-/**
- * @brief Writes multiple bytes to an I2C device.
- * 
- * @param addr I2C address of the device.
- * @param reg Register address to write to.
- * @param data Data to write (64-bit value).
- * @param bytes Number of bytes to write (up to 8).
- * 
- * This function writes multiple bytes of data to an I2C device from a 64-bit value.
- */
-void WriteMulti(uint8_t addr, uint8_t reg, uint64_t data, uint8_t bytes) {
-    if (!TransmitAdd(addr, WRITE)) { // Transmit address for write
-        if (!TransmitByte(reg)) { // Write register address
-            for (uint8_t i = 0; i < bytes; i++) {
-                uint8_t byteToSend = (data >> (8 * (bytes - 1 - i))) & 0xFF;
-                if (!TransmitByte(byteToSend)) // Transmit each byte
-                    continue;
-                else
-                    break; // If an error occurs, stop the transmission
-            }
-        }
-    }
-
-    TWI0.MCTRLB |= TWI_MCMD_STOP_gc; // Send STOP signal
-}
-
-/**
- * @brief Quickly writes a block of data to the I2C bus.
- * 
- * @param data Pointer to the data to be transmitted.
- * @param size Number of bytes to transmit.
- * 
- * This function sends a block of data to the I2C bus without addressing or registering.
- * It writes each byte individually until the block is complete.
- */
-void FastWriteBlock(uint8_t *data, uint8_t size) {
-    while (size--) {
-        TWI0.MDATA = *data++;
-        while (!(TWI0.MSTATUS & TWI_WIF_bm));
-    }
-    TWI0.MCTRLB = TWI_MCMD_STOP_gc; // Send STOP signal
 }

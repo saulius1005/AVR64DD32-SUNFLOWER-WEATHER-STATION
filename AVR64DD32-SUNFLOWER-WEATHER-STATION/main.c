@@ -47,12 +47,12 @@ int main(void)
     ReadBMP280Calibration(); // Read BMP280 calibration values
 
     screen_clear(); // Clear the screen
-	uint8_t updater = 0; //to control every action update intervals
+	//uint8_t updater = 0; //to control every action update intervals
     while (1) 
     {
 		ClockAndDataReader();//updating constantly data reading from SUN clock
 		correct_solar_angles();
-		if(updater == 1 || updater == 3){ // update p,Rh,t every 1,3 of 6
+	//	if(updater == 1 || updater == 3){ // update p,Rh,t every 1,3 of 6
         // Read and process sensor data
         ReadBMP280TP(); // Read temperature and pressure from BMP280
         CalcTrueTemp(); // Calculate true temperature from BMP280
@@ -62,24 +62,24 @@ int main(void)
         // Read humidity and temperature from SHT21
         Separator(SHT21_Read(HOLD_MASTER_RH_MES)); // Read humidity from SHT21
         Separator(SHT21_Read(HOLD_MASTER_T_MES)); // Read temperature from SHT21
-		}
+	//	}
 
-		if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6
+		//if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6
 			// Read and process additional environmental parameters
 			WindSpeed(); // Calculate wind speed
 			WindDirection(); // Calculate wind direction
 			SunLevel(); // Calculate sun level
-		}
+		//}
 
         // Handle keypad input
         keypad(); //updating constantly
 
         // Display data on screen based on selected window
-		if(updater == 6){ //update every 2*0.15 = 0.3 second (update every ~150mS  (6.7times/s) maximum, without this if)
+	//	if(updater == 6){ //update every 2*0.15 = 0.3 second (update every ~150mS  (6.7times/s) maximum, without this if)
 			windows();
-			updater = 0; //Update screen info only every second 
-		}
-		updater++;
+	//		updater = 0; //Update screen info only every second 
+	//	}
+	//	updater++;
 
 		//updating constantly
         // Send data over USART (e.g., sun azimuth, wind speed, etc.). Data to towers

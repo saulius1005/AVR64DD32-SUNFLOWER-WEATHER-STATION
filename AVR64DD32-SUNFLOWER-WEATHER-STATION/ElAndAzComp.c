@@ -11,35 +11,34 @@
 #include "Settings.h"
 #include "ElAndAzCompVar.h"
 
-double calculate_refraction() {
-	// 1. Geometrinë korekcija dël aukðèio
-    double elevationRad = SUN.elevation * M_PI / 180.0; // Elevacija radianais
-    double elevationCorrection = atan(Altitude.UNCOMP / R_EARTH); // Kampas dël aukðèio
-    elevationRad += elevationCorrection; // Koreguojame elevacijà
+float calculate_refraction() {
+    //Aukðèio korekcija
+    float elevationRad = SUN.elevation * DegToRad; // Elevacija radianais
+    float altitudeCorrection = atan(Altitude.UNCOMP / R_EARTH); // Aukðèio korekcija
+    elevationRad += altitudeCorrection;
 
-    // 2. Atmosferinës refrakcijos korekcija su drëgme
-    double elevationDegree = elevationRad * 180.0 / M_PI; // Paverèiame atgal á laipsnius
+    float refraction = 0.0;
+	if(SUN.elevation > 0){//Atmosferinës refrakcijos pataisa
+		// Atmosferos parametrai
+		float P = BMP280.Pressure / 1010.0; // Normalizuotas slëgis
+		float T = 283.0 / (273.0 + SHT21.T); // Normalizuota temperatûra
+		float RH = SHT21.RH / 100.0; // Santykinë drëgmë
+		// Refrakcijos formulë
+		double denominator = tan(elevationRad + (10.3 / (SUN.elevation + 5.11)) * DegToRad);
+			refraction = (P / T) * (0.0167 * (1 + 0.0037 * RH)) / denominator;
+	}
 
-    if (elevationDegree > 0) { // Refrakcija taikoma tik teigiamai elevacijai
-        double refrakcija = (BMP280.Pressure / 1010.0) * (283.0 / (273.0 + SHT21.T)) *
-                            (1.02 * (1 + 0.0037 * SHT21.RH)) / 
-                            tan(elevationDegree + 10.3 / (elevationDegree + 5.11));
-        elevationDegree += refrakcija; // Pridedame refrakcijà prie elevacijos
-    }
-
-    return elevationDegree;
+    return SUN.elevation + refraction;
 }
-
 
 void correct_solar_angles() {
     if(SUN.elevation > 0){
         // Adjust the elevation by the refraction and keep the azimuth unchanged
         SUN.adjelevation = calculate_refraction();  
-        SUN.adjazimuth = SUN.azimuth;
+        SUN.adjazimuth = SUN.azimuth; //leave last azimuth value after sunset
     }
     // If the elevation is below the horizon, retain the last azimuth and elevation values
 }
-
 
 void SunLevel(){
     ADC0_SetupSLS();  // Set up the ADC for reading the sun level

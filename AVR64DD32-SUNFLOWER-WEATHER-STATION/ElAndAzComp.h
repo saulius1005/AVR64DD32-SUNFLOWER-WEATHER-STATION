@@ -12,6 +12,8 @@
 #define ELANDAZCOMP_H_
 
 #define R_EARTH 6371000.0
+#define DegToRad 0.01745329251994329576923690768489 //pi/180
+#define RadToDeg 57.295779513082320876798154814105 //180/pi
 #define Default_AZ 171.4
 #define Default_EL 37.3
 

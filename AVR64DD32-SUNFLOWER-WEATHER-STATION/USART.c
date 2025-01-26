@@ -63,18 +63,6 @@ int USART0_printChar(char c, FILE *stream) {
 	return 0;
 }
 
-/**
- * @brief Reads a single character from USART0.
- * 
- * This function waits until a character is received on USART0, clears the receive interrupt flag, and then returns the received character.
- * 
- * @return The received character.
- */
-char USART0_readChar() {
-	USART0.STATUS = USART_RXCIF_bm; // Clear buffer before reading
-	while (!(USART0.STATUS & USART_RXCIF_bm)); // Wait for data to be received
-	return USART0.RXDATAL; // Return received character
-}
 
 /**
  * @brief Initializes USART1 with a baud rate of 2500000.

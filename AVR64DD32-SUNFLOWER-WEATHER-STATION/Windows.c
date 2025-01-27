@@ -508,7 +508,7 @@ void smartScreenUpdater() {
 	    case WINDOW_DATE_LOCATION: // Date and location
 	    if (Refresh.firstUpdate[WINDOW_DATE_LOCATION] || Keypad3x4.key != Refresh.tempKey) {
 		    DateAndLocationChangeWindow();
-		    Refresh.firstUpdate[WINDOW_DATE_LOCATION] = false;
+		    Refresh.firstUpdate[WINDOW_DATE_LOCATION] = true;
 	    }
 	    break;
 

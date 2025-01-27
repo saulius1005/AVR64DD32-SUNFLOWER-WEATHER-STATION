@@ -18,12 +18,12 @@
 #define Default_EL 37.3
 
 typedef struct {
-    float elevation;       
+    volatile float elevation;       
 	float elevationTop;
-    float azimuth;        
-    float adjelevation;    
-    float adjazimuth;     
-    uint16_t sunlevel;    
+    volatile float azimuth;        
+    volatile float adjelevation;    
+    volatile float adjazimuth;     
+    volatile uint16_t sunlevel;    
 } SunAngles;
 
 typedef struct { 

@@ -312,118 +312,6 @@ void ValidateNewData(uint8_t * newTimeAndPlace, uint8_t *step)
 }
 
 /**
- * @brief Displays parameters when there are no errors.
- * 
- * This function shows parameters such as date, time, azimuth, elevation, and location data when there are no errors.
- * @param upDown The current step to determine which parameters to display.
- */
-void parametersWOerror(uint8_t upDown) { 
-    if(upDown < 1){
-        screen_write_formatted_text("t:", upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%4d%02d%02d%02d%02d%02d%d", upDown, ALIGN_RIGHT,
-        Date_Clock.year,
-        Date_Clock.month,
-        Date_Clock.day,
-        Date_Clock.hour,
-        Date_Clock.minute,
-        Date_Clock.second,
-        Date_Clock.hunderts
-        );
-    }
-    if (upDown < 2){
-        screen_write_formatted_text("az:°", 1-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f",1-upDown, ALIGN_RIGHT, SUN.azimuth);
-    }
-    if(upDown < 3){
-        screen_write_formatted_text("el.°:", 2-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 2-upDown, ALIGN_RIGHT, SUN.elevation);
-    }
-    if (upDown < 4)
-    {
-        //screen_write_formatted_text("kor. el.°:", 3-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("adj. el.°:", 3-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.2f", 3-upDown, ALIGN_RIGHT, SUN.adjelevation);
-    }
-	if (upDown < 5)
-	{
-		//screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
-		screen_write_formatted_text("day top el.°:", 4-upDown, ALIGN_LEFT); // English
-		screen_write_formatted_text("%3.2f", 4-upDown, ALIGN_RIGHT, SUN.elevationTop);
-	}
-    if (upDown > 4)
-    {
-        //screen_write_formatted_text("laik. z:", 12-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("t.z:", 12-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 12-upDown, ALIGN_RIGHT, Date_Clock.timezone);
-    }
-    if (upDown > 5)
-    {
-        //screen_write_formatted_text("plat. °:", 13-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("lat. °:", 13-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%2.4f", 13-upDown, ALIGN_RIGHT, Date_Clock.latitude);
-    }
-    if (upDown > 6)
-    {
-        //screen_write_formatted_text("ilg. °:", 14-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("long. °:", 14-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%3.4f", 14-upDown, ALIGN_RIGHT, Date_Clock.longitude);
-    }
-}
-
-/**
- * @brief Displays parameters when there are errors.
- * 
- * This function shows parameters related to sensor readings and altitude when there are errors.
- * @param upDown The current step to determine which parameters to display.
- */
-void parametersWerror(uint8_t upDown){ 
-
-    if (upDown < 6)
-    {
-        screen_write_formatted_text("bmp T C°:", 5-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 5-upDown, ALIGN_RIGHT, BMP280.Temperature);
-    }
-    if (upDown < 7)
-    {
-        screen_write_formatted_text("sht T C°:", 6-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 6-upDown, ALIGN_RIGHT, SHT21.T);
-    }
-    if (upDown < 8)
-    {
-        screen_write_formatted_text("p hPa:", 7-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.2f", 7-upDown, ALIGN_RIGHT, BMP280.Pressure);
-    }
-    if (upDown > 0 && upDown <= 8)
-    {
-        screen_write_formatted_text("rh %%:", 8-upDown, ALIGN_LEFT);
-        screen_write_formatted_text("%3.1f", 8-upDown, ALIGN_RIGHT, SHT21.RH);
-    }
-    if (upDown > 1 && upDown <= 9)
-    {
-        screen_write_formatted_text("alt. m:", 9-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 9-upDown, ALIGN_RIGHT, Altitude.UNCOMP);
-    }
-    if (upDown > 2 && upDown <= 10)
-    {
-        //screen_write_formatted_text("v.g. m/s:", 15-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("w.s. m/s:", 10-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 10-upDown, ALIGN_RIGHT, Wind.speed);
-    }
-    if (upDown > 3 && upDown <= 11)
-    {
-        //screen_write_formatted_text("v.k.nr:", 16-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("w.d.no:", 11-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 11-upDown, ALIGN_RIGHT, Wind.direction);
-    }
-    if (upDown > 7 && upDown <= 12)
-    {
-        //screen_write_formatted_text("a.l. mV:", 17-upDown, ALIGN_LEFT); // Lithuanian
-        screen_write_formatted_text("l.l. mV:", 15-upDown, ALIGN_LEFT); // English
-        screen_write_formatted_text("%d", 15-upDown, ALIGN_RIGHT, SUN.sunlevel);
-    }
-}
-
-/**
  * @brief Actions after pressing the back button (* key).
  * 
  * Clears the screen and resets the key held state.
@@ -491,46 +379,6 @@ void DateAndLocationChangeWindow()
 		backButton(); //going back to main window
 }
 
-/**
- * @brief Displays parameters when there are no errors
- * 
- * This function displays parameters such as date, time, altitude, latitude, etc., when no errors are present.
- * 
- * @param upDown The parameter indicating the up or down selection for scrolling through parameters
- */
-void ParameterViewWindow()
-{
-	static uint8_t upDown = 0;
-			if ((Keypad3x4.key == 8 && upDown < 8) || (Keypad3x4.key == 2 && upDown > 0)) {
-				while (scan_keypad() != 0); // Wait until the key is released
-				upDown += (Keypad3x4.key == 8) ? 1 : -1;
-				screen_clear();
-			}
-			if(
-			(upDown == 0 && Refresh.tempHsec != Date_Clock.hunderts) ||
-			((upDown < 3 || upDown > 0)  && (Refresh.tempC != (int16_t)SHT21.T * 100 ||
-			/*Refresh.tempRh != (uint16_t)SHT21.RH*100 ||*/
-			Refresh.tempp != (uint16_t)BMP280.Pressure*100 ||
-			/*Refresh.tempC2 != (int16_t)BMP280.Temperature*100 ||*/
-			Refresh.tempAz != (uint16_t)SUN.azimuth*100 ||
-			Refresh.tempEl != (uint16_t)SUN.elevation*100))
-			
-			){
-				if (Date_Clock.error == 1) {
-					int8_t place = 0;
-					if(upDown >= 5 && upDown < 6)
-						place = 5;
-					else if(upDown >= 6 && upDown)
-						place = 12- upDown;
-					if(upDown != 4) //if updown is 4 all parameters showing, because at that part of window all parameters are not dependent on data from the clock device
-					ClockError(place);	//also scrolling error message if present
-				} 
-				else 
-					parametersWOerror(upDown); //showing those parameters only if the clock device is working normally without errors
-			parametersWerror(upDown); //showing these parameters all the time if error is present
-		}
-		backButton(); // Going back to the main window
-}
 
 /**
  * @brief Displays the main window with important parameters
@@ -540,24 +388,19 @@ void ParameterViewWindow()
  */
 void MainWindow()
 {
-	//screen_write_formatted_text("Temperatûra:", 0, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Temperature:", 0, ALIGN_LEFT); //English
 	screen_write_formatted_text("%dC°", 0, ALIGN_RIGHT, (int8_t)SHT21.T);
 
-	//screen_write_formatted_text("Slëgis:", 1, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Pressure:", 1, ALIGN_LEFT);//English
 	screen_write_formatted_text("%dhPa", 1, ALIGN_RIGHT, (uint16_t)BMP280.Pressure);
 
-	//screen_write_formatted_text("Drëgmë:", 2, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Humidity:", 2, ALIGN_LEFT);//English
 	screen_write_formatted_text("%d%%", 2, ALIGN_RIGHT, (uint8_t)SHT21.RH);
 
-	//screen_write_formatted_text("Vëjas:    ", 3, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Wind:    ", 3, ALIGN_LEFT);//English
 	screen_write_formatted_text("        %s", 3, ALIGN_CENTER, WindDirNames());
 	screen_write_formatted_text("%2dm/s", 3, ALIGN_RIGHT, Wind.speed);
 
-	//screen_write_formatted_text("Apð.lygis:", 4, ALIGN_LEFT);//Lithuanian
 	screen_write_formatted_text("Light level:", 4, ALIGN_LEFT);//English
 	screen_write_formatted_text("%4dmV", 4, ALIGN_RIGHT, SUN.sunlevel);
 
@@ -573,60 +416,157 @@ void MainWindow()
 	}
 }
 
-/*void TestWindow(){ //Screen testing window
-	screen_write_formatted_text("L.T.", 0, ALIGN_LEFT); //English
-	screen_write_formatted_text("R.T.", 0, ALIGN_RIGHT); //English
-	screen_write_formatted_text("---------------------", 2, ALIGN_CENTER); //English //21 -
-	screen_write_formatted_text("-----------", 3, ALIGN_LEFT); //English //11-
-	screen_write_formatted_text("-----------", 3, ALIGN_RIGHT); //English //11 -
-	screen_write_formatted_text("----------", 4, ALIGN_LEFT); //English //10-
-	screen_write_formatted_text("-----------", 4, ALIGN_RIGHT); //English //11 -
-	screen_write_formatted_text("L.B.", 7, ALIGN_LEFT); //English
-	screen_write_formatted_text("R.B.", 7, ALIGN_RIGHT); //English
-}*/
-
-/**
- * @brief Main function to handle window switching based on keypress
- * 
- * This function checks the key press and switches between different windows such as main window, date and location change window, or parameters view window.
- */
-
-void smartScreenUpdater(){
-
-	if(Keypad3x4.key_held == 21){ //date and location 
-		if(Keypad3x4.key != Refresh.tempKey) // updating only if any key is pressed
-		DateAndLocationChangeWindow();
+void timeBaseParameterWindow(){
+	screen_write_formatted_text("Time data", 0, ALIGN_CENTER);
+	screen_write_formatted_text("---------------------", 1, ALIGN_CENTER);
+	if(Date_Clock.error == 1)
+	ClockError(3);
+	else{
+		screen_write_formatted_text("t:", 2, ALIGN_LEFT);
+		screen_write_formatted_text("%4d%02d%02d%02d%02d%02d%d", 2, ALIGN_RIGHT,
+		Date_Clock.year,
+		Date_Clock.month,
+		Date_Clock.day,
+		Date_Clock.hour,
+		Date_Clock.minute,
+		Date_Clock.second,
+		Date_Clock.hunderts
+		);
+		screen_write_formatted_text("t.z:", 3, ALIGN_LEFT); // English
+		screen_write_formatted_text("%d", 3, ALIGN_RIGHT, Date_Clock.timezone);
+		screen_write_formatted_text("az:", 4, ALIGN_LEFT);
+		screen_write_formatted_text("%3.2f°",4, ALIGN_RIGHT, SUN.azimuth);
+		screen_write_formatted_text("el:", 5, ALIGN_LEFT);
+		screen_write_formatted_text("%2.2f°", 5, ALIGN_RIGHT, SUN.elevation);
+		screen_write_formatted_text("adj.el:", 6, ALIGN_LEFT); // English
+		screen_write_formatted_text("%2.2f°", 6, ALIGN_RIGHT, SUN.adjelevation);
+		screen_write_formatted_text("day top el:", 7, ALIGN_LEFT); // English
+		screen_write_formatted_text("%2.2f°", 7, ALIGN_RIGHT, SUN.elevationTop);
 	}
-	else if(Keypad3x4.key_held == 22){ // parameters view window
-			 ParameterViewWindow();
+	backButton();
+}
+
+void locationParameterWindow(){
+	screen_write_formatted_text("Location data", 0, ALIGN_CENTER);
+	screen_write_formatted_text("---------------------", 1, ALIGN_CENTER);
+	if(Date_Clock.error == 1)
+	ClockError(3);
+	else{
+		screen_write_formatted_text("lat:", 2, ALIGN_LEFT); // English
+		screen_write_formatted_text("%2.4f°", 2, ALIGN_RIGHT, Date_Clock.latitude);
+		screen_write_formatted_text("long:", 3, ALIGN_LEFT); // English
+		screen_write_formatted_text("%3.4f°", 3, ALIGN_RIGHT, Date_Clock.longitude);
+		screen_write_formatted_text("alt:", 4, ALIGN_LEFT); // English
+		screen_write_formatted_text("%dm", 4, ALIGN_RIGHT, Altitude.UNCOMP);
 	}
-	else{ //main menu
-		if(Refresh.tempC != (int16_t)SHT21.T * 100 || 
-		Refresh.tempRh != (uint16_t)SHT21.RH*100 || 
-		Refresh.tempp != (uint16_t)BMP280.Pressure*100 || 
-		Refresh.tempWD != Wind.direction || 
-		Refresh.tempWS != Wind.speed || 
-		Refresh.tempSLS != SUN.sunlevel || 
-		Refresh.tempAz != (uint16_t)SUN.azimuth*100 ||
-		Refresh.tempEl != (uint16_t)SUN.elevation*100 ||
-		Refresh.tempSec != Date_Clock.second)
-			MainWindow();
-	}
+	backButton();
+}
+
+void weatherParameterWindow(){
+	screen_write_formatted_text("Environment data", 0, ALIGN_CENTER);
+	screen_write_formatted_text("---------------------", 1, ALIGN_CENTER);
+	    screen_write_formatted_text("BMP280:", 2, ALIGN_LEFT);
+	    screen_write_formatted_text("%2.2fC°", 2, ALIGN_RIGHT, BMP280.Temperature);
+		screen_write_formatted_text("%4.2fhPa", 3, ALIGN_RIGHT, BMP280.Pressure);
+
+	    screen_write_formatted_text("SHT21:", 4, ALIGN_LEFT);
+	    screen_write_formatted_text("%2.2fC°", 4, ALIGN_CENTER, SHT21.T);
+		screen_write_formatted_text("%3.1f%%", 4, ALIGN_RIGHT, SHT21.RH);
+
+	    screen_write_formatted_text("Light level:", 5, ALIGN_LEFT); // English
+	    screen_write_formatted_text("%dmV", 5, ALIGN_RIGHT, SUN.sunlevel);    
+
+		screen_write_formatted_text("Wind:    ", 6, ALIGN_LEFT);//English
+		screen_write_formatted_text("   %s(%d)", 6, ALIGN_CENTER, WindDirNames(), Wind.direction);
+		screen_write_formatted_text("%2dm/s", 6, ALIGN_RIGHT, Wind.speed);
+	backButton();
 }
 
 
-void windows() {
-	smartScreenUpdater();
-	Refresh.tempC = (int16_t)SHT21.T * 100;
-	Refresh.tempRh = (uint16_t)SHT21.RH*100; 
-	Refresh.tempp = (uint16_t)BMP280.Pressure*100;
-	Refresh.tempC2 = (int16_t)BMP280.Temperature * 100;
+bool isWeatherChanged() {
+	return Refresh.tempC != (int16_t)(SHT21.T * 10) ||
+	Refresh.tempRh != (uint16_t)(SHT21.RH * 10) ||
+	Refresh.tempp != (uint32_t)(BMP280.Pressure * 100) ||
+	Refresh.tempWD != Wind.direction ||
+	Refresh.tempWS != Wind.speed ||
+	Refresh.tempSLS != SUN.sunlevel ||
+	Refresh.tempC2 != (int16_t)(BMP280.Temperature * 10);
+}
+
+bool isTimeAngleChanged() {
+	return Refresh.tempAz != (uint16_t)(SUN.azimuth * 100) ||
+	Refresh.tempEl != (uint16_t)(SUN.elevation * 100) ||
+	Refresh.tempSec != Date_Clock.second;
+}
+
+void smartScreenUpdater() {
+    bool weatherChanged = isWeatherChanged();
+    bool mainMenuChanged = weatherChanged || isTimeAngleChanged();
+
+    // First open update and later according to conditions
+    switch (Keypad3x4.key_held) {
+	    case WINDOW_DATE_LOCATION: // Date and location
+	    if (Refresh.firstUpdate[WINDOW_DATE_LOCATION] || Keypad3x4.key != Refresh.tempKey) {
+		    DateAndLocationChangeWindow();
+		    Refresh.firstUpdate[WINDOW_DATE_LOCATION] = false;
+	    }
+	    break;
+
+	    case WINDOW_TIME_ANGLE_VIEW: // Parameters view window
+	    if (Refresh.firstUpdate[WINDOW_TIME_ANGLE_VIEW] || isTimeAngleChanged()/*Refresh.tempHsec != Date_Clock.hunderts//use instead of isTimeAngleChanged() if needed fastest update rate */) {
+		    timeBaseParameterWindow();
+		    Refresh.firstUpdate[WINDOW_TIME_ANGLE_VIEW] = false;
+	    }
+	    break;
+
+	    case WINDOW_LOCATION: // Long press 3
+	    if (Refresh.firstUpdate[WINDOW_LOCATION] || Refresh.tempNoRefresh == 0) {
+		    locationParameterWindow();
+		    Refresh.firstUpdate[WINDOW_LOCATION] = false;
+		    Refresh.tempNoRefresh = 1; // Specialus atvejis tik ðiam langui
+	    }
+	    break;
+
+	    case WINDOW_WEATHER: // Long press 4
+	    if (Refresh.firstUpdate[WINDOW_WEATHER] || weatherChanged) {
+		    weatherParameterWindow();
+		    Refresh.firstUpdate[WINDOW_WEATHER] = false;
+	    }
+	    break;
+
+	    case WINDOW_MAIN_MENU: // Main menu
+	    if (Refresh.firstUpdate[WINDOW_MAIN_MENU] || mainMenuChanged) {
+		    MainWindow();
+		    Refresh.firstUpdate[WINDOW_MAIN_MENU] = false;
+	    }
+	    break;
+    }
+
+    // Reset pradinio atnaujinimo indikatorius, kai pereinama á kità langà
+    for (int i = 0; i < 5; i++) {
+	    Refresh.firstUpdate[i] = (i == Keypad3x4.key_held) ? Refresh.firstUpdate[i] : true;
+    }
+
+    // Specialus atvejis tik langui 23
+    Refresh.tempNoRefresh = (Keypad3x4.key_held == WINDOW_LOCATION) ? 1 : 0;
+}
+
+void updateRefreshValues() {
+	Refresh.tempC = (int16_t)(SHT21.T * 10); //update only if temperature changes in 0.1 degree
+	Refresh.tempRh = (uint16_t)(SHT21.RH * 10);
+	Refresh.tempp = (uint32_t)(BMP280.Pressure * 100);
+	Refresh.tempC2 = (int16_t)(BMP280.Temperature * 10);//update only if temperature changes in 0.1 degree
 	Refresh.tempWD = Wind.direction;
 	Refresh.tempWS = Wind.speed;
 	Refresh.tempSLS = SUN.sunlevel;
-	Refresh.tempAz = (uint16_t)SUN.azimuth*100;
-	Refresh.tempEl = (uint16_t)SUN.elevation*100;
+	Refresh.tempAz = (uint16_t)(SUN.azimuth * 100);
+	Refresh.tempEl = (uint16_t)(SUN.elevation * 100);
 	Refresh.tempSec = Date_Clock.second;
-	Refresh.tempHsec = Date_Clock.hunderts;
+	//Refresh.tempHsec = Date_Clock.hunderts; //commented for screen updating saving: why i need to know exactly 0.1second changes... also need uncomment comments in WINDOW_TIME_ANGLE_VIEW section
 	Refresh.tempKey = Keypad3x4.key;
-};
+}
+
+void windows() {
+	smartScreenUpdater();
+	updateRefreshValues();
+}

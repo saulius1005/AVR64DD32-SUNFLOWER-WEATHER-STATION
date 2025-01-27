@@ -10,7 +10,7 @@
 #define WINDOWSVAR_H_
 
 ScreenUpdater Refresh = {
-
+.firstUpdate = {true, true, true, true, true} // Visi langai pradþioje yra "neatnaujinti"
 };
 
 

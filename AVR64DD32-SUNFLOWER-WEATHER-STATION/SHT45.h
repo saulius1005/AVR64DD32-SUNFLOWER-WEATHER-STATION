@@ -102,8 +102,8 @@ typedef struct {
 	uint8_t Heater; // Flag to turn on or off the integrated heater
 	uint8_t Resolution; // Resolution for temperature and humidity measurements
 	uint8_t Battery; // Flag to detect battery status (2.25V detection)
-	float T; // Calculated temperature in Celsius
-	float RH; // Calculated relative humidity in percentage
+	volatile float T; // Calculated temperature in Celsius
+	volatile float RH; // Calculated relative humidity in percentage
 	uint8_t Fault; // Flag for CRC correctness (0: valid CRC, 1: invalid CRC)
 	float e; // Vapor pressure calculation (optional, for advanced applications)
 } SHT;

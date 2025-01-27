@@ -24,13 +24,13 @@
  * timezone, altitude, and error/warning states.
  */
 typedef struct {
-    int year;          /**< Year (e.g., 2024) */
-    int month;         /**< Month (1 to 12) */
-    int day;           /**< Day of the month (1 to 31) */
-    int hour;          /**< Hour (0 to 23) */
-    int minute;        /**< Minute (0 to 59) */
-    int second;        /**< Second (0 to 59) */
-    int hunderts;      /**< Hunderts of a second */
+    volatile int year;          /**< Year (e.g., 2024) */
+    volatile int month;         /**< Month (1 to 12) */
+    volatile int day;           /**< Day of the month (1 to 31) */
+    volatile int hour;          /**< Hour (0 to 23) */
+    volatile int minute;        /**< Minute (0 to 59) */
+    volatile int second;        /**< Second (0 to 59) */
+    volatile int hunderts;      /**< Hunderts of a second */
     double latitude;   /**< Latitude in decimal degrees (-90.0000 to 90.0000) */
     double longitude;  /**< Longitude in decimal degrees (-180.0000 to 180.0000) */
     int timezone;      /**< Timezone offset from UTC (-12 to +12) */

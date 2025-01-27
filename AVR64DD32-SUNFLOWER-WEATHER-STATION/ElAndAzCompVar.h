@@ -19,7 +19,7 @@ SunAngles SUN = {
 };
 
 Alt Altitude = {
- .UNCOMP = 86
+ .UNCOMP = 1157
 };
 
 #endif /* ELANDAZCOMPVAR_H_ */

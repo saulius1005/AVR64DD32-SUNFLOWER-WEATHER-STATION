@@ -534,7 +534,7 @@ void smartScreenUpdater() {
 	    }
 	    break;
 
-	    case WINDOW_MAIN_MENU: // Main menu
+	    default: // Main menu
 	    if (Refresh.firstUpdate[WINDOW_MAIN_MENU] || mainMenuChanged) {
 		    MainWindow();
 		    Refresh.firstUpdate[WINDOW_MAIN_MENU] = false;

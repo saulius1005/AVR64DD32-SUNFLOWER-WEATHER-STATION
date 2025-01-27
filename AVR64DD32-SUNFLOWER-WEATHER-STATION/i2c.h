@@ -17,7 +17,7 @@
  * 
  * Defines the I2C clock frequency (1000 kHz) used for communication.
  */
-#define F_SCL 1200000UL   ///< I2C clock frequency (1000 kHz)
+#define F_SCL 1200000UL   ///< I2C clock frequency (800 kHz)
 
 /**
  * @brief Timeout Counter

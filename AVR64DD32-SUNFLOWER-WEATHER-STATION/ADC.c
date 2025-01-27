@@ -50,8 +50,8 @@ void ADC0_SetupWD() {
  * Configures the ADC0 with a reference voltage of 1.024V and sets the positive
  * input channel to AIN30 (PC2).
  */
-void ADC0_SetupSLS() {
-    VREF.ADC0REF = VREF_REFSEL_1V024_gc; // 1.024V as reference voltage for SLS
+void ADC0_SetupSLS(uint8_t level) {
+    VREF.ADC0REF = level/*VREF_REFSEL_1V024_gc*/; // 1.024V as reference voltage for SLS //0-1.024V, 1-2.048V, 2-4.096V
     ADC0.MUXPOS = ADC_MUXPOS_AIN30_gc; // PC2 as input for SLS
 }
 

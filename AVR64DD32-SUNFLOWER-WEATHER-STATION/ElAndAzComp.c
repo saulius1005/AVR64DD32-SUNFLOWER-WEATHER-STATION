@@ -41,6 +41,21 @@ void correct_solar_angles() {
 }
 
 void SunLevel(){
-    ADC0_SetupSLS();  // Set up the ADC for reading the sun level
-    SUN.sunlevel = round(ADC0_read()/4);  // Read ADC value, scale it, and round the result
+    ADC0_SetupSLS(0);  // 1.023V
+	if(ADC0_read()== 4095){
+		ADC0_SetupSLS(1); //2.048V
+		if (ADC0_read()== 4095){
+			ADC0_SetupSLS(2); //4.096V
+			if(ADC0_read()== 4095){ //this is more less actual limit of SLS but still
+				ADC0_SetupSLS(5); //Vdd
+				SUN.sunlevel = 1.220703125* ADC0_read(); //Assume Vdd is 5.0V 
+			}
+			else
+			SUN.sunlevel = ADC0_read();
+		}
+		else
+			SUN.sunlevel = (ADC0_read()/2)+0.5;
+	}
+	else
+	 SUN.sunlevel = (ADC0_read()/4)+0.5;  // Read ADC value, scale it, and round the result
 }

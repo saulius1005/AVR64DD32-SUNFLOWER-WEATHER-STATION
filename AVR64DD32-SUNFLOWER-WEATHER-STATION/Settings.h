@@ -269,7 +269,7 @@ void ADC0_SetupWD();
 /**
  * @brief Configures ADC0 for sensor signal setup.
  */
-void ADC0_SetupSLS();
+void ADC0_SetupSLS(uint8_t level);
 
 /**
  * @brief Reads data from ADC0.

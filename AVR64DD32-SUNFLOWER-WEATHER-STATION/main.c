@@ -60,8 +60,8 @@ int main(void)
         CalcTruePres(); // Calculate true pressure
 
         // Read humidity and temperature from SHT21
-        Separator(SHT21_Read(HOLD_MASTER_RH_MES)); // Read humidity from SHT21
-        Separator(SHT21_Read(HOLD_MASTER_T_MES)); // Read temperature from SHT21
+        Separator(SHT21_Read(NO_HOLD_MASTER_RH_MES)); // Read humidity from SHT21
+        Separator(SHT21_Read(NO_HOLD_MASTER_T_MES)); // Read temperature from SHT21
 	//	}
 
 		//if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6

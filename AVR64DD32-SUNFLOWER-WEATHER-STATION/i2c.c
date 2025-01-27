@@ -21,7 +21,7 @@
  */
 void I2C_init(void) {
     // Configure SDA hold, SDA setup, and enable fast mode plus (FMP)
-    TWI0.CTRLA = TWI_SDAHOLD_50NS_gc | TWI_SDASETUP_8CYC_gc | TWI_FMPEN_ON_gc;
+    TWI0.CTRLA = TWI_SDAHOLD_OFF_gc | TWI_SDASETUP_4CYC_gc | TWI_FMPEN_ON_gc;
 
     // Set baud rate for the I2C bus
     TWI0.MBAUD = (uint8_t)TWI_BAUD;

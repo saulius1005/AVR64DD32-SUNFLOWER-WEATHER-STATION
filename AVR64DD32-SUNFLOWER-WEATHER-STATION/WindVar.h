@@ -14,5 +14,18 @@ WindParam Wind= {
 .direction = 0
 };
 
+FIR_VALUES readwindspeed = {
+	.Result = 0,
+	.Filter = {0},
+	.index = 0 
+};
+
+FIR_VALUES readwinddirection = {
+	.Result = 0,
+	.Filter = {0},
+	.index = 0
+};
+
+
 
 #endif /* WINDVAR_H_ */

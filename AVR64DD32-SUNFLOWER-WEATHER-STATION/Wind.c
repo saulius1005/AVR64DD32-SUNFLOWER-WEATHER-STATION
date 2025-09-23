@@ -57,7 +57,7 @@ void WindDirection(){
  * @return A string representing the short name of the wind direction.
  */
 const char * WindDirNames(){ // return wind direction short name
-	switch(Wind.direction) {
+	switch(/*Wind.direction*/readwinddirection.Result) {
 		/*case 1: return "ÐR"; // Lithuanian
 		case 2: return "R ";
 		case 3: return "PR";
@@ -76,3 +76,67 @@ const char * WindDirNames(){ // return wind direction short name
 	//return "Ð "; // Lithuanian: North
 	return "N ";  // English: North
 }
+
+/*
+void WIND_FIR(windparam_t channel) {
+
+	FIR_VALUES *speedordir = (channel == WIND_SPEED) ? &readwindspeed : &readwinddirection;// pasirenku kas greitis ar kryptis
+
+	speedordir->Result = (channel == WIND_SPEED) ? Wind.speed : Wind.direction;
+
+	speedordir->Filter[speedordir->index] = speedordir->Result; //priskiriu reikðmæ
+
+	speedordir->index = (speedordir->index + 1) % FIR_STEPS; //didinu indeksa
+
+	uint32_t sum = 0;
+	for (uint8_t i = 0; i < FIR_STEPS; i++) { //apskaièiuoju bendrà sumà
+		sum += speedordir->Filter[i];
+	}
+	speedordir->Result = sum / FIR_STEPS; // iðvedu vidurká
+}*/
+
+void WIND_FIR(windparam_t channel) {
+
+	FIR_VALUES *speedordir = (channel == WIND_SPEED) ? &readwindspeed : &readwinddirection;
+
+	speedordir->Result = (channel == WIND_SPEED) ? Wind.speed : Wind.direction;
+
+	speedordir->Filter[speedordir->index] = speedordir->Result; // áraðom reikðmæ
+
+	speedordir->index = (speedordir->index + 1) % FIR_STEPS; // padidinam indeksà
+
+	if (channel == WIND_SPEED) {
+		// --- GREITIS: paprastas slenkantis vidurkis ---
+		uint32_t sum = 0;
+		for (uint8_t i = 0; i < FIR_STEPS; i++) {
+			sum += speedordir->Filter[i];
+		}
+		speedordir->Result = sum / FIR_STEPS;
+		} else {
+		// --- KRYPTIS: daþniausiai pasikartojanti reikðmë ---
+		uint8_t counts[8] = {0};
+		for (uint8_t i = 0; i < FIR_STEPS; i++) {
+			uint8_t v = speedordir->Filter[i];
+			if (v < 8) counts[v]++;  // apsauga
+		}
+
+		uint8_t best = 0;
+		uint8_t max_count = counts[0];
+
+		for (uint8_t i = 1; i < 8; i++) {
+			if (counts[i] > max_count) {
+				max_count = counts[i];
+				best = i;
+				} else if (counts[i] == max_count) {
+				// Jei keli kandidatai turi vienodà daþná, paimame naujausià á buferá
+				uint8_t last_index = (speedordir->index + FIR_STEPS - 1) % FIR_STEPS;
+				if (speedordir->Filter[last_index] == i) {
+					best = i;
+				}
+			}
+		}
+
+		speedordir->Result = best;
+	}
+}
+

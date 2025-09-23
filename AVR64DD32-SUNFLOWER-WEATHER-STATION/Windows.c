@@ -399,7 +399,7 @@ void MainWindow()
 
 	screen_write_formatted_text("Wind:    ", 3, ALIGN_LEFT);//English
 	screen_write_formatted_text("        %s", 3, ALIGN_CENTER, WindDirNames());
-	screen_write_formatted_text("%2dm/s", 3, ALIGN_RIGHT, Wind.speed);
+	screen_write_formatted_text("%2dm/s", 3, ALIGN_RIGHT, /*Wind.speed*/readwindspeed.Result);
 
 	screen_write_formatted_text("Light level:", 4, ALIGN_LEFT);//English
 	screen_write_formatted_text("%4dmV", 4, ALIGN_RIGHT, SUN.sunlevel);
@@ -477,8 +477,8 @@ void weatherParameterWindow(){
 	    screen_write_formatted_text("%dmV", 5, ALIGN_RIGHT, SUN.sunlevel);    
 
 		screen_write_formatted_text("Wind:    ", 6, ALIGN_LEFT);//English
-		screen_write_formatted_text("   %s(%d)", 6, ALIGN_CENTER, WindDirNames(), Wind.direction);
-		screen_write_formatted_text("%2dm/s", 6, ALIGN_RIGHT, Wind.speed);
+		screen_write_formatted_text("   %s(%d)", 6, ALIGN_CENTER, WindDirNames(), /*Wind.direction*/readwinddirection.Result);
+		screen_write_formatted_text("%2dm/s", 6, ALIGN_RIGHT, /*Wind.speed*/readwindspeed.Result);
 	backButton();
 }
 
@@ -487,8 +487,8 @@ bool isWeatherChanged() {
 	return Refresh.tempC != (int16_t)(SHT21.T * 10) ||
 	Refresh.tempRh != (uint16_t)(SHT21.RH * 10) ||
 	Refresh.tempp != (uint32_t)(BMP280.Pressure * 100) ||
-	Refresh.tempWD != Wind.direction ||
-	Refresh.tempWS != Wind.speed ||
+	Refresh.tempWD != /*Wind.direction*/readwinddirection.Result ||
+	Refresh.tempWS != /*Wind.speed*/readwindspeed.Result ||
 	Refresh.tempSLS != SUN.sunlevel ||
 	Refresh.tempC2 != (int16_t)(BMP280.Temperature * 10);
 }
@@ -556,8 +556,8 @@ void updateRefreshValues() {
 	Refresh.tempRh = (uint16_t)(SHT21.RH * 10);
 	Refresh.tempp = (uint32_t)(BMP280.Pressure * 100);
 	Refresh.tempC2 = (int16_t)(BMP280.Temperature * 10);//update only if temperature changes in 0.1 degree
-	Refresh.tempWD = Wind.direction;
-	Refresh.tempWS = Wind.speed;
+	Refresh.tempWD = /*Wind.direction*/readwinddirection.Result;
+	Refresh.tempWS = /*Wind.speed*/readwindspeed.Result;
 	Refresh.tempSLS = SUN.sunlevel;
 	Refresh.tempAz = (uint16_t)(SUN.azimuth * 100);
 	Refresh.tempEl = (uint16_t)(SUN.elevation * 100);

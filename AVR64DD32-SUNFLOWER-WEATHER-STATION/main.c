@@ -67,7 +67,10 @@ int main(void)
 		//if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6
 			// Read and process additional environmental parameters
 			WindSpeed(); // Calculate wind speed
+			WIND_FIR(WIND_SPEED);
 			WindDirection(); // Calculate wind direction
+			WIND_FIR(WIND_DIRECTION);
+
 			SunLevel(); // Calculate sun level
 		//}
 
@@ -86,7 +89,7 @@ int main(void)
 
         USART_printf(0, "{%.2f|%.2f|%.2f|%d|%d|%d}\r\n", 
                      SUN.adjazimuth, SUN.adjelevation, SUN.elevationTop, 
-                     Wind.speed, Wind.direction, 
+                     /*Wind.speed*/readwindspeed.Result, /*Wind.direction*/readwinddirection.Result, 
                      SUN.sunlevel); // Send formatted data
 		PORTA.OUTTGL = PIN6_bm; //toggling TX LED (to make visible)
     }

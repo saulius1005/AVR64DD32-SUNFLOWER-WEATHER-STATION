@@ -422,6 +422,8 @@ void WindSpeed();
  */
 void WindDirection();
 
+void WIND_FIR(windparam_t channel);
+
 /**
  * @brief Computes the sun level.
  * 

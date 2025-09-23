@@ -15,6 +15,7 @@
 #define WINDADCSTEP (WINDADCRES / 7) // 8 values for Wind directions: 585
 #define WINDADCHALFSTEP (WINDADCSTEP / 2) //Half step is required for tolerance calculation for 0 and 7 directions: 292
 #define WINDDIRTOLERANCE (WINDADCSTEP / 4) // Toleration ± 146 steps
+#define FIR_STEPS 20
 
 /**
  * @brief Structure for storing wind parameters.
@@ -28,6 +29,17 @@ typedef struct {
 	uint8_t direction;  ///< Wind direction (0 = North, 1 = Northeast, 2 = East, etc.)
 } WindParam;
 
+typedef struct {
+	uint16_t Result;         ///< Last filtered ADC result
+	uint16_t Filter[FIR_STEPS]; ///< FIR filter buffer
+	uint8_t index;           ///< Index for the current position in the filter buffer
+} FIR_VALUES;
+
+typedef enum {
+	WIND_SPEED = true,   ///< ADC channel for voltage measurement
+	WIND_DIRECTION = false   ///< ADC channel for current measurement
+} windparam_t;
+
 /**
  * @brief External variable representing the current wind parameters.
  * 
@@ -35,5 +47,7 @@ typedef struct {
  * by the `WindSpeed` and `WindDirection` functions.
  */
 extern WindParam Wind;
+extern FIR_VALUES readwindspeed;
+extern FIR_VALUES readwinddirection;
 
 #endif /* WIND_H_ */

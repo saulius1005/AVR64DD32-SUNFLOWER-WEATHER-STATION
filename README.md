@@ -47,15 +47,15 @@ Any other button pressed and held will return to the main window, where the most
 
 
 
+# Data Format
 
-
-**2025-10-01 Update (FIR part for wind data are also not tested)**
+## **2025-10-01 Update (FIR part for wind data are also not tested)**
 
 The data transmission format for columns has been changed. Also added CRC8 cdma2000 for transmitted data
 
 
 
-Before (float data type + data splitter simbol):
+### Before (float data type + data splitter simbol):
 
 ```
 {AAA.AA|BB.BB|CC.CC|DD|E|FFF}
@@ -77,7 +77,7 @@ Before (float data type + data splitter simbol):
 * **|** – Data token splitter
 
 
-After (unsigned int (hex) + constant data length + crc8 ):
+### After (unsigned int (hex) + constant data length + crc8 ):
 
 
 ```

@@ -35,10 +35,10 @@ void executeCommand(char *command) {
 
     // Parse additional tokens for solar angles, latitude, longitude, and timezone
     if ((token = strtok(NULL, "|")) != NULL) {
-        SUN.azimuth = atof(token);
+        SUN.azimuth = (uint16_t)(atof(token)*100 + 0.5);
     }
     if ((token = strtok(NULL, "|")) != NULL) {
-        SUN.elevation = atof(token);
+        SUN.elevation = (uint16_t)(atof(token)*100 + 0.5);
     }
     if ((token = strtok(NULL, "|")) != NULL) {
         Date_Clock.latitude = atof(token);
@@ -50,7 +50,7 @@ void executeCommand(char *command) {
         Date_Clock.timezone = atoi(token);
     }
 	if ((token = strtok(NULL, "|")) != NULL) {
-		SUN.elevationTop = atof(token);
+		SUN.elevationTop = (uint16_t)(atof(token)*100 + 0.5);
 	}
 }
 

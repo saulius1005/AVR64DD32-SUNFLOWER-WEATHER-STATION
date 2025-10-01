@@ -87,10 +87,21 @@ int main(void)
 		//updating constantly
         // Send data over USART (e.g., sun azimuth, wind speed, etc.). Data to towers
 
+/*
         USART_printf(0, "{%.2f|%.2f|%.2f|%d|%d|%d}\r\n", 
                      SUN.adjazimuth, SUN.adjelevation, SUN.elevationTop, 
-                     /*Wind.speed*/readwindspeed.Result, /*Wind.direction*/readwinddirection.Result, 
-                     SUN.sunlevel); // Send formatted data
+                     / *Wind.speed* /readwindspeed.Result, / *Wind.direction* /readwinddirection.Result, 
+                     SUN.sunlevel); // Send formatted data*/
+
+
+		USART_printf(0, "{%04x%04x%04x%02x%x%03x%02x}\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000
+														(uint16_t)SUN.adjelevation, //45.00 = 4500
+														(uint16_t)SUN.elevationTop, // 45.00 = 4500
+														(uint8_t)/*Wind.speed*/readwindspeed.Result, 
+														(uint8_t)/*Wind.direction*/readwinddirection.Result,
+														(uint16_t)SUN.sunlevel,
+														(uint8_t)crc8_cdma2000_for_tower()); // Send formatted data
+
 		PORTA.OUTTGL = PIN6_bm; //toggling TX LED (to make visible)
     }
 }

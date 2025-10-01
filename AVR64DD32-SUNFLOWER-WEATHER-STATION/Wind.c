@@ -112,7 +112,7 @@ void WIND_FIR(windparam_t channel) {
 			sum += speedordir->Filter[i];
 		}
 		speedordir->Result = sum / FIR_STEPS;
-		} else {
+	} else {
 		// --- KRYPTIS: daþniausiai pasikartojanti reikðmë ---
 		uint8_t counts[8] = {0};
 		for (uint8_t i = 0; i < FIR_STEPS; i++) {

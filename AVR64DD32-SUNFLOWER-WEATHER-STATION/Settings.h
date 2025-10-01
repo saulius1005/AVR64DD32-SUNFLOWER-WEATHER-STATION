@@ -654,5 +654,7 @@ void get_key_state();
  */
 void keypad();
 
+uint8_t crc8_cdma2000_for_tower();
+
 
 #endif /* SETTINGS_H_ */

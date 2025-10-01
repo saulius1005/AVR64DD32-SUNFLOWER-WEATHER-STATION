@@ -410,9 +410,9 @@ void MainWindow()
 		ClockError(6);
 	else{
 		screen_write_formatted_text("%4d-%02d-%02d A:", 6, ALIGN_LEFT, Date_Clock.year, Date_Clock.month, Date_Clock.day);
-		screen_write_formatted_text("%3.2f°", 6, ALIGN_RIGHT, SUN.adjazimuth);
+		screen_write_formatted_text("%3d.%02d°", 6, ALIGN_RIGHT, SUN.adjazimuth/100, SUN.adjazimuth%100);
 		screen_write_formatted_text("  %02d:%02d:%02d E:", 7, ALIGN_LEFT, Date_Clock.hour, Date_Clock.minute, Date_Clock.second);
-		screen_write_formatted_text("%2.2f°", 7, ALIGN_RIGHT, SUN.adjelevation);
+		screen_write_formatted_text("%2d.%02d°", 7, ALIGN_RIGHT, SUN.adjelevation/100, SUN.adjelevation%100);
 	}
 }
 
@@ -435,13 +435,13 @@ void timeBaseParameterWindow(){
 		screen_write_formatted_text("t.z:", 3, ALIGN_LEFT); // English
 		screen_write_formatted_text("%d", 3, ALIGN_RIGHT, Date_Clock.timezone);
 		screen_write_formatted_text("az:", 4, ALIGN_LEFT);
-		screen_write_formatted_text("%3.2f°",4, ALIGN_RIGHT, SUN.azimuth);
+		screen_write_formatted_text("%3d.%02d°",4, ALIGN_RIGHT, SUN.azimuth/100, SUN.azimuth%100);
 		screen_write_formatted_text("el:", 5, ALIGN_LEFT);
-		screen_write_formatted_text("%2.2f°", 5, ALIGN_RIGHT, SUN.elevation);
+		screen_write_formatted_text("%2d.%02d°", 5, ALIGN_RIGHT, SUN.elevation/100, SUN.elevation%100);
 		screen_write_formatted_text("adj.el:", 6, ALIGN_LEFT); // English
-		screen_write_formatted_text("%2.2f°", 6, ALIGN_RIGHT, SUN.adjelevation);
+		screen_write_formatted_text("%2d.%02d°", 6, ALIGN_RIGHT, SUN.adjelevation/100, SUN.adjelevation%100);
 		screen_write_formatted_text("day top el:", 7, ALIGN_LEFT); // English
-		screen_write_formatted_text("%2.2f°", 7, ALIGN_RIGHT, SUN.elevationTop);
+		screen_write_formatted_text("%2d.%02d°", 7, ALIGN_RIGHT, SUN.elevationTop/100, SUN.elevationTop%100);
 	}
 	backButton();
 }

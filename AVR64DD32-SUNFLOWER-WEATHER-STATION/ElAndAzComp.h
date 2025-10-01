@@ -14,16 +14,16 @@
 #define R_EARTH 6371000.0
 #define DegToRad 0.01745329251994329576923690768489 //pi/180
 #define RadToDeg 57.295779513082320876798154814105 //180/pi
-#define Default_AZ 171.4
-#define Default_EL 37.3
+#define Default_AZ 1714
+#define Default_EL 373
 
 typedef struct {
-    volatile float elevation;       
-	float elevationTop;
-    volatile float azimuth;        
-    volatile float adjelevation;    
-    volatile float adjazimuth;     
-    volatile uint16_t sunlevel;    
+    uint16_t elevation;       
+	uint16_t elevationTop;
+    uint16_t azimuth;        
+    uint16_t adjelevation;    
+    uint16_t adjazimuth;     
+    uint16_t sunlevel;    
 } SunAngles;
 
 typedef struct { 

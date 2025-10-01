@@ -34,7 +34,7 @@ float calculate_refraction() {
 void correct_solar_angles() {
     if(SUN.elevation > 0){
         // Adjust the elevation by the refraction and keep the azimuth unchanged
-        SUN.adjelevation = calculate_refraction();  
+        SUN.adjelevation = (uint16_t)calculate_refraction()*100;  
         SUN.adjazimuth = SUN.azimuth; //leave last azimuth value after sunset
     }
     // If the elevation is below the horizon, retain the last azimuth and elevation values

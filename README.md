@@ -45,5 +45,58 @@ The hash symbol # is only functional in the location and time setting window, wh
 Any other button pressed and held will return to the main window, where the most relevant information is displayed.
 ![20250127_184554](https://github.com/user-attachments/assets/a8a43bb7-e887-4505-8b6d-3d4fdfd20c6d)
 
-**For now, as the tower controllers are not yet fully designed, the weather station currently sends the following data: Azimuth, Elevation, Maximum daily elevation, Wind direction, Wind speed, and Average light level. It is possible that the list of transmitted parameters may change in the future.**
+
+
+
+
+**2025-10-01 Update (FIR part for wind data are also not tested)**
+
+The data transmission format for columns has been changed. Also added CRC8 cdma2000 for transmitted data
+
+
+
+Before (float data type + data splitter simbol):
+
+```
+{AAA.AA|BB.BB|CC.CC|DD|E|FFF}
+```
+**Where:**
+
+* **AAA.AA** – Azimuth angle
+
+* **BB.BB** – Elevation angle
+
+* **CC.CC** – Day Top Elevation angle
+
+* **DD** – Wind speed
+
+* **E** – Wind direction
+
+* **FFF** – Light Level
+  
+* **|** – Data token splitter
+
+
+After (unsigned int (hex) + constant data length + crc8 ):
+
+
+```
+{AAAABBBBCCCCDDEFFFGG}
+```
+**Where:**
+
+* **AAAA** – Azimuth angle
+
+* **BBBB** – Elevation angle
+
+* **CCCC** – Day Top Elevation angle
+
+* **DD** – Wind speed
+
+* **E** – Wind direction
+
+* **FFF** – Light Level
+
+* **GG** – CRC-8 value
+
 

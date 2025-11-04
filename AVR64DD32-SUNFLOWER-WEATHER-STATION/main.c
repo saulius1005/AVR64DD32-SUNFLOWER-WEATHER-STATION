@@ -102,6 +102,7 @@ int main(void)
 														(uint16_t)SUN.sunlevel,
 														(uint8_t)crc8_cdma2000_for_tower()); // Send formatted data
 		
+/*
 		USART_printf(0, "[%04x%04x%04x%02x%x%02x%x%03x%04x%03x%03x%04x]\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000 //Data for Logger
 		(uint16_t)SUN.adjelevation, //45.00 = 4500
 		(uint16_t)SUN.elevationTop, // 45.00 = 4500
@@ -120,7 +121,7 @@ int main(void)
 
 		// [5988 0E95 10A0 12 4 0A 4 1B1 FE00 290 401 FDF3] //negative temp exp.
 		// [229.20 37.33 42.56 18 4 10 4 433 -5.12 65.6 1025 -5.25]
-		// [59880E9510A01240A41B1FE00290401FDF3]
+		// [59880E9510A01240A41B1FE00290401FDF3]*/
 
 		PORTA.OUTTGL = PIN6_bm; //toggling TX LED (to make visible)
     }

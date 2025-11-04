@@ -18,7 +18,7 @@
  * transmission and reception at a baud rate of 2.5 Mbps with double-speed operation.
  */
 void USART0_init() {
-	USART0.BAUD = (uint16_t)USART0_BAUD_RATE(3000000); // Set baud rate to 2.5 Mbps
+	USART0.BAUD = (uint16_t)USART0_BAUD_RATE(115200); // Set baud rate to 2.5 Mbps
 	USART0.CTRLA = USART_RS485_ENABLE_gc;
 	USART0.CTRLB = USART_RXEN_bm | USART_TXEN_bm | USART_RXMODE_CLK2X_gc; // Enable RX, TX, double speed mode
 	USART0.CTRLC = USART_CMODE_ASYNCHRONOUS_gc | USART_CHSIZE_8BIT_gc | USART_PMODE_DISABLED_gc | USART_SBMODE_1BIT_gc; // Configure for 8-bit, no parity, 1 stop bit, asynchronous mode

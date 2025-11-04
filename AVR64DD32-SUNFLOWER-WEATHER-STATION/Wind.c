@@ -20,8 +20,9 @@
  * global variable `Wind.speed` with the calculated value.
  */
 void WindSpeed(){
-	ADC0_SetupWS();
-	Wind.speed = (ADC0_read()* 0.00732421875); // same as *30m/s /4096 = 0.00732421875 //and rounding to lower side
+	ADC0_SetupWS();//vref 4.096 for more accurate result, becouse vdd can differ expl 4.88V- 5.2V, internal vref 4.096V is all time the same if Vdd >= 4.5V
+	//Wind.speed = (ADC0_read()* 0.00732421875); //if ref is vdd. same as *30m/s /4096 = 0.00732421875 //and rounding to lower side
+	Wind.speed = (ADC0_read()* 0.006)+0.5;//4096 ADC steps = 4.096V = 24.576m/s + simple round
 }
 
 /**

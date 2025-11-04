@@ -17,7 +17,7 @@
  * - Enables the ADC.
  */
 void ADC0_init() {
-    ADC0.CTRLB = ADC_SAMPNUM_ACC128_gc; // 1 measurements
+    ADC0.CTRLB = ADC_SAMPNUM_ACC128_gc; // 128 measurements
     ADC0.CTRLC = ADC_PRESC_DIV4_gc; // 24Mhz / 16 ADC speed
     ADC0.CTRLA = ADC_ENABLE_bm | ADC_RESSEL_12BIT_gc; // 12-bit resolution
 }
@@ -29,7 +29,8 @@ void ADC0_init() {
  * channel to AIN29 (PC1).
  */
 void ADC0_SetupWS() {
-    VREF.ADC0REF = VREF_REFSEL_VDD_gc;
+    //VREF.ADC0REF = VREF_REFSEL_VDD_gc;
+	VREF.ADC0REF = VREF_REFSEL_4V096_gc;
     ADC0.MUXPOS = ADC_MUXPOS_AIN29_gc; // PC1 as input for WS
 }
 
@@ -40,7 +41,7 @@ void ADC0_SetupWS() {
  * channel to AIN28 (PC0).
  */
 void ADC0_SetupWD() {
-    VREF.ADC0REF = VREF_REFSEL_VDD_gc;
+    VREF.ADC0REF = VREF_REFSEL_VDD_gc; //for wind direction accurity is not actual
     ADC0.MUXPOS = ADC_MUXPOS_AIN28_gc; // PC0 as input for WD
 }
 

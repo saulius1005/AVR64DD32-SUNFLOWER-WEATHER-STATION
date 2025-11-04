@@ -94,13 +94,33 @@ int main(void)
                      SUN.sunlevel); // Send formatted data*/
 
 
-		USART_printf(0, "{%04x%04x%04x%02x%x%03x%02x}\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000
+		USART_printf(0, "{%04x%04x%04x%02x%x%03x%02x}\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000 //Data for Towers
 														(uint16_t)SUN.adjelevation, //45.00 = 4500
 														(uint16_t)SUN.elevationTop, // 45.00 = 4500
 														(uint8_t)/*Wind.speed*/readwindspeed.Result, 
 														(uint8_t)/*Wind.direction*/readwinddirection.Result,
 														(uint16_t)SUN.sunlevel,
 														(uint8_t)crc8_cdma2000_for_tower()); // Send formatted data
+		
+		USART_printf(0, "[%04x%04x%04x%02x%x%02x%x%03x%04x%03x%03x%04x]\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000 //Data for Logger
+		(uint16_t)SUN.adjelevation, //45.00 = 4500
+		(uint16_t)SUN.elevationTop, // 45.00 = 4500
+		(uint8_t)Wind.speed,
+		(uint8_t)Wind.direction,
+		(uint8_t)readwindspeed.Result, //wind speed after filter
+		(uint8_t)readwinddirection.Result, //wind direction after filter
+		(uint16_t)SUN.sunlevel,
+		(int16_t)(SHT21.T*100), //update only if temperature changes in 0.1 degree
+		(uint16_t)(SHT21.RH*10),
+		(uint16_t)BMP280.Pressure,
+		(int16_t)(BMP280.Temperature*100)); // Send formatted data
+		//exmpl line: [5988 0E95 10A0 12 4 0A 4 1B1 08ED 290 401 08F2] //positive temp exp.
+		// [229.20 37.33 42.56 18 4 10 4 433 22.85 65.6 1025 22.90]
+		// [59880E9510A01240A41B108ED29040108F2]
+
+		// [5988 0E95 10A0 12 4 0A 4 1B1 FE00 290 401 FDF3] //negative temp exp.
+		// [229.20 37.33 42.56 18 4 10 4 433 -5.12 65.6 1025 -5.25]
+		// [59880E9510A01240A41B1FE00290401FDF3]
 
 		PORTA.OUTTGL = PIN6_bm; //toggling TX LED (to make visible)
     }

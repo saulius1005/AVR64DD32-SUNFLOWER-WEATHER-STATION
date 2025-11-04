@@ -14,8 +14,8 @@
 #define R_EARTH 6371000.0
 #define DegToRad 0.01745329251994329576923690768489 //pi/180
 #define RadToDeg 57.295779513082320876798154814105 //180/pi
-#define Default_AZ 1714
-#define Default_EL 373
+#define Default_AZ 17140
+#define Default_EL 3730
 
 typedef struct {
     uint16_t elevation;       

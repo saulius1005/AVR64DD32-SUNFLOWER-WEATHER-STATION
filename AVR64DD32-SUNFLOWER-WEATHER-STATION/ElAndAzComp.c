@@ -12,29 +12,30 @@
 #include "ElAndAzCompVar.h"
 
 float calculate_refraction() {
-    //Aukðèio korekcija
-    float elevationRad = SUN.elevation * DegToRad; // Elevacija radianais
-    float altitudeCorrection = atan(Altitude.UNCOMP / R_EARTH); // Aukðèio korekcija
-    elevationRad += altitudeCorrection;
+	// Konvertuojam á tikrus laipsnius
+	float elevationDeg = SUN.elevation / 100.0f;
+	float elevationRad = elevationDeg * DegToRad;
+	float altitudeCorrection = atan(Altitude.UNCOMP / R_EARTH);
+	elevationRad += altitudeCorrection;
 
-    float refraction = 0.0;
-	if(SUN.elevation > 0){//Atmosferinës refrakcijos pataisa
-		// Atmosferos parametrai
-		float P = BMP280.Pressure / 1010.0; // Normalizuotas slëgis
-		float T = 283.0 / (273.0 + SHT21.T); // Normalizuota temperatûra
-		float RH = SHT21.RH / 100.0; // Santykinë drëgmë
-		// Refrakcijos formulë
-		double denominator = tan(elevationRad + (10.3 / (SUN.elevation + 5.11)) * DegToRad);
-			refraction = (P / T) * (0.0167 * (1 + 0.0037 * RH)) / denominator;
+	float refraction = 0.0f;
+	if (elevationDeg > 0.0f) {
+		float P = BMP280.Pressure / 1010.0f;
+		float T = 283.0f / (273.0f + SHT21.T);
+		float RH = SHT21.RH / 100.0f;
+
+		double denominator = tan(elevationRad + (10.3 / (elevationDeg + 5.11)) * DegToRad);
+		refraction = (P / T) * (0.0167f * (1 + 0.0037f * RH)) / denominator;
 	}
 
-    return SUN.elevation + refraction;
+	// Gràþinam pataisà ×100
+	return refraction * 100.0f;
 }
 
 void correct_solar_angles() {
     if(SUN.elevation > 0){
         // Adjust the elevation by the refraction and keep the azimuth unchanged
-        SUN.adjelevation = (uint16_t)calculate_refraction()*100;  
+        SUN.adjelevation = SUN.elevation + (uint16_t)calculate_refraction(); 
         SUN.adjazimuth = SUN.azimuth; //leave last azimuth value after sunset
     }
     // If the elevation is below the horizon, retain the last azimuth and elevation values

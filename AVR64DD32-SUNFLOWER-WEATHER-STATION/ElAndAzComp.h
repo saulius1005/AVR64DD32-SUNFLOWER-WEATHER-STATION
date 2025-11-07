@@ -18,10 +18,10 @@
 #define Default_EL 3730
 
 typedef struct {
-    uint16_t elevation;       
-	uint16_t elevationTop;
+    int16_t elevation;       
+	int16_t elevationTop;
     uint16_t azimuth;        
-    uint16_t adjelevation;    
+    int16_t adjelevation;    
     uint16_t adjazimuth;     
     uint16_t sunlevel;    
 } SunAngles;

@@ -38,7 +38,7 @@ void executeCommand(char *command) {
         SUN.azimuth = (uint16_t)(atof(token)*100 + 0.5);
     }
     if ((token = strtok(NULL, "|")) != NULL) {
-        SUN.elevation = (uint16_t)(atof(token)*100 + 0.5);
+        SUN.elevation = (int16_t)(atof(token)*100 + 0.5);
     }
     if ((token = strtok(NULL, "|")) != NULL) {
         Date_Clock.latitude = atof(token);
@@ -50,7 +50,7 @@ void executeCommand(char *command) {
         Date_Clock.timezone = atoi(token);
     }
 	if ((token = strtok(NULL, "|")) != NULL) {
-		SUN.elevationTop = (uint16_t)(atof(token)*100 + 0.5);
+		SUN.elevationTop = (int16_t)(atof(token)*100 + 0.5);
 	}
 }
 

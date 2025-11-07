@@ -47,58 +47,31 @@ int main(void)
     ReadBMP280Calibration(); // Read BMP280 calibration values
 
     screen_clear(); // Clear the screen
-	//uint8_t updater = 0; //to control every action update intervals
     while (1) 
     {
 		ClockAndDataReader();//updating constantly data reading from SUN clock
 		correct_solar_angles();
-	//	if(updater == 1 || updater == 3){ // update p,Rh,t every 1,3 of 6
         // Read and process sensor data
         ReadBMP280TP(); // Read temperature and pressure from BMP280
         CalcTrueTemp(); // Calculate true temperature from BMP280
         // BMP280.CalibrationValues.t_fine = SHT21.T * 5120.0; // Uncomment if you want to use SHT21 temperature instead of BMP280 for pressure calculations
         CalcTruePres(); // Calculate true pressure
-
-        // Read humidity and temperature from SHT21
         Separator(SHT21_Read(NO_HOLD_MASTER_RH_MES)); // Read humidity from SHT21
         Separator(SHT21_Read(NO_HOLD_MASTER_T_MES)); // Read temperature from SHT21
-	//	}
-
-		//if(updater == 2 || updater == 4){ //update wind and sun every 2,6 of 6
-			// Read and process additional environmental parameters
-			WindSpeed(); // Calculate wind speed
-			WIND_FIR(WIND_SPEED);
-			WindDirection(); // Calculate wind direction
-			WIND_FIR(WIND_DIRECTION);
-
-			SunLevel(); // Calculate sun level
-		//}
-
-        // Handle keypad input
+		WindSpeed(); // Calculate wind speed
+		WIND_FIR(WIND_SPEED);
+		WindDirection(); // Calculate wind direction
+		WIND_FIR(WIND_DIRECTION);
+		SunLevel(); // Calculate sun level
         keypad(); //updating constantly
-
-        // Display data on screen based on selected window
-	//	if(updater == 6){ //update every 2*0.15 = 0.3 second (update every ~150mS  (6.7times/s) maximum, without this if)
-			windows();
-	//		updater = 0; //Update screen info only every second 
-	//	}
-	//	updater++;
-
-		//updating constantly
-        // Send data over USART (e.g., sun azimuth, wind speed, etc.). Data to towers
-
-/*
-        USART_printf(0, "{%.2f|%.2f|%.2f|%d|%d|%d}\r\n", 
-                     SUN.adjazimuth, SUN.adjelevation, SUN.elevationTop, 
-                     / *Wind.speed* /readwindspeed.Result, / *Wind.direction* /readwinddirection.Result, 
-                     SUN.sunlevel); // Send formatted data*/
+		windows();
 
 
 		USART_printf(0, "{%04x%04x%04x%02x%x%03x%02x}\r\n",(uint16_t)SUN.adjazimuth, //180.00 = 18000 //Data for Towers
 														(uint16_t)SUN.adjelevation, //45.00 = 4500
 														(uint16_t)SUN.elevationTop, // 45.00 = 4500
-														(uint8_t)/*Wind.speed*/readwindspeed.Result, 
-														(uint8_t)/*Wind.direction*/readwinddirection.Result,
+														(uint8_t)readwindspeed.Result, 
+														(uint8_t)readwinddirection.Result,
 														(uint16_t)SUN.sunlevel,
 														(uint8_t)crc8_cdma2000_for_tower()); // Send formatted data
 		

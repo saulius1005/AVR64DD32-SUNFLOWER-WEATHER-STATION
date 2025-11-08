@@ -495,7 +495,7 @@ bool isWeatherChanged() {
 
 bool isTimeAngleChanged() {
 	return Refresh.tempAz != (uint16_t)(SUN.azimuth * 100) ||
-	Refresh.tempEl != (uint16_t)(SUN.elevation * 100) ||
+	Refresh.tempEl != (int16_t)(SUN.elevation * 100) ||
 	Refresh.tempSec != Date_Clock.second;
 }
 
@@ -560,7 +560,7 @@ void updateRefreshValues() {
 	Refresh.tempWS = /*Wind.speed*/readwindspeed.Result;
 	Refresh.tempSLS = SUN.sunlevel;
 	Refresh.tempAz = (uint16_t)(SUN.azimuth * 100);
-	Refresh.tempEl = (uint16_t)(SUN.elevation * 100);
+	Refresh.tempEl = (int16_t)(SUN.elevation * 100);
 	Refresh.tempSec = Date_Clock.second;
 	//Refresh.tempHsec = Date_Clock.hunderts; //commented for screen updating saving: why i need to know exactly 0.1second changes... also need uncomment comments in WINDOW_TIME_ANGLE_VIEW section
 	Refresh.tempKey = Keypad3x4.key;

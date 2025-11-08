@@ -8575,7 +8575,7 @@ bool isTimeAngleChanged() {
     3844:	65 9f       	mul	r22, r21
     3846:	90 0d       	add	r25, r0
     3848:	11 24       	eor	r1, r1
-	Refresh.tempEl != (uint16_t)(SUN.elevation * 100) ||
+	Refresh.tempEl != (int16_t)(SUN.elevation * 100) ||
     384a:	28 17       	cp	r18, r24
     384c:	39 07       	cpc	r19, r25
     384e:	e1 f4       	brne	.+56     	; 0x3888 <isTimeAngleChanged+0x5a>
@@ -8597,7 +8597,7 @@ bool isTimeAngleChanged() {
     386a:	28 17       	cp	r18, r24
     386c:	39 07       	cpc	r19, r25
     386e:	71 f4       	brne	.+28     	; 0x388c <isTimeAngleChanged+0x5e>
-	Refresh.tempEl != (uint16_t)(SUN.elevation * 100) ||
+	Refresh.tempEl != (int16_t)(SUN.elevation * 100) ||
 	Refresh.tempSec != Date_Clock.second;
     3870:	80 91 ca 63 	lds	r24, 0x63CA	; 0x8063ca <Refresh+0x12>
     3874:	90 e0       	ldi	r25, 0x00	; 0
@@ -8608,7 +8608,7 @@ bool isTimeAngleChanged() {
 
 bool isTimeAngleChanged() {
 	return Refresh.tempAz != (uint16_t)(SUN.azimuth * 100) ||
-	Refresh.tempEl != (uint16_t)(SUN.elevation * 100) ||
+	Refresh.tempEl != (int16_t)(SUN.elevation * 100) ||
     387e:	82 17       	cp	r24, r18
     3880:	93 07       	cpc	r25, r19
     3882:	31 f0       	breq	.+12     	; 0x3890 <isTimeAngleChanged+0x62>
@@ -8894,7 +8894,7 @@ void updateRefreshValues() {
     3a54:	11 24       	eor	r1, r1
     3a56:	2e 87       	std	Y+14, r18	; 0x0e
     3a58:	3f 87       	std	Y+15, r19	; 0x0f
-	Refresh.tempEl = (uint16_t)(SUN.elevation * 100);
+	Refresh.tempEl = (int16_t)(SUN.elevation * 100);
     3a5a:	40 81       	ld	r20, Z
     3a5c:	51 81       	ldd	r21, Z+1	; 0x01
     3a5e:	84 9f       	mul	r24, r20

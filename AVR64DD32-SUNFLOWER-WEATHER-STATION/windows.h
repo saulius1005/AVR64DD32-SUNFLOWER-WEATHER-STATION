@@ -18,7 +18,7 @@ typedef struct {
 		volatile uint8_t tempWS;
 		volatile uint16_t tempSLS;
 		volatile uint16_t tempAz;
-		volatile uint16_t tempEl;
+		volatile int16_t tempEl;
 		volatile uint8_t tempSec;
 		volatile uint8_t tempHsec;
 		volatile uint8_t tempKey;
